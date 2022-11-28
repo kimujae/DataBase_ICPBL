@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block style %}
+<style>
+    .login {
+        margin-top: 100px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row login justify-content-center">
+        <div class="col-4">
+            {% include "error.html" %}
+            <form method="post" action="{% url 'common:profile_edit' %}">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3">
+                        <label for="id_username" class="form-label">사용자 이름</label>
+                        <input type="text" class="form-control" name="username" id="id_username" autofocus value="{{ form.username.value|default_if_none:user.username }}">
+                        </div>
+                        <div class="mb-3">
+                        <label for="id_email" class="form-label">이메일</label>
+                        <input type="text" class="form-control" name="email" id="id_email" value="{{ form.email.value|default_if_none:user.email }}">
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'common:profile_view' %}" class="btn btn-secondary">취소</a>
+                        <button type="submit" class="btn btn-primary">정보 수정</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

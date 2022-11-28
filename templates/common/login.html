@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block style %}
+<style>
+    .login {
+        margin-top: 100px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row login justify-content-center">
+        <div class="col-4">
+            {% include "error.html" %}
+            <form method="post" action="{% url 'common:login' %}">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3">
+                        <label for="id_username" class="form-label">사용자 이름</label>
+                        <input type="text" class="form-control" name="username" id="id_username" autofocus value="{{ form.username.value|default_if_none:'' }}">
+                        </div>
+                        <div class="mb-3">
+                        <label for="id_password" class="form-label">비밀번호</label>
+                        <input type="password" class="form-control" name="password" id="id_password" value="{{ form.password.value|default_if_none:'' }}">
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">로그인</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

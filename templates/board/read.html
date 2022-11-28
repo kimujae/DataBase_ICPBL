@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- 게시글 보기 -->
+    <div class="row mt-3">
+        <div class="col-12">
+            {% include "message.html" %}
+            <div class="card border-primary">
+                <div class="card-header">
+                    {{ board.subject }}
+                </div>
+                <div class="card-body">
+                    <p>등록일 : {{ board.updated_date }}</p>
+                    <p>작성자 : {{ board.author.username }}</p>
+                    <p>{{ board.content }}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'board:board_list' %}" class="btn btn-secondary">목록</a>
+                    <div class="float-end">
+                        <a href="{% url 'board:board_update' board.id %}" class="btn btn-warning">수정</a>
+                        <button type="button" class="btn btn-danger delete-button" data-url="{% url 'board:board_delete' board.id %}">삭제</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// 게시글 보기 -->
+
+    {% if reply %}
+        <!-- 댓글 수정 -->
+        <div class="row mt-3">
+            <div class="col-12">
+                {% include "error.html" %}
+                <form method="post" action="{% url 'board:reply_update' board.id reply.id %}">
+                    {% csrf_token %}
+                    <div class="card">
+                        <div class="card-header">
+                            댓글 수정
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="content">내용</label>
+                                <textarea type="text" class="form-control" name="content" id="replyContent" rows="5">{{ form.content.value|default_if_none:reply.content }}</textarea>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'board:board_read' board.id %}" class="btn btn-secondary">취소</a>
+                            <div class="float-end">
+                                <button type="submit" class="btn btn-primary">수정</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--// 댓글 수정 -->
+    {% else %}
+        <!-- 댓글 등록 -->
+        <div class="row mt-3">
+            <div class="col-12">
+                {% include "error.html" %}
+                <form method="post" action="{% url 'board:reply_create' board.id %}">
+                    {% csrf_token %}
+                    <div class="card">
+                        <div class="card-header">
+                            댓글 등록
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="content">내용</label>
+                                <textarea type="text" class="form-control" name="content" id="content" rows="5">{{ form.content.value|default_if_none:'' }}</textarea>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="float-end">
+                                <button type="submit" class="btn btn-primary">등록</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--// 댓글 등록 -->
+    {% endif %}
+
+    <!-- 댓글 목록 -->
+    {% if reply_list %}
+        {% for reply in reply_list %}
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <p>등록일 : {{ reply.updated_date }}</p>
+                            <p>작성자 : {{ reply.author.username }}</p>
+                            <p>{{ reply.content }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="float-end">
+                                <a href="{% url 'board:reply_update' board.id reply.id %}" class="btn btn-warning">수정</a>
+                                <button type="button" class="btn btn-danger delete-button" data-url="{% url 'board:reply_delete' board.id reply.id %}">삭제</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <!--// 댓글 목록 -->
+</div>
+
+<!-- 삭제 모달 -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">글 삭제</h5>
+      </div>
+      <div class="modal-body">
+        <p>글을 삭제할까요?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-danger" id="deleteConfirm">삭제</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--// 삭제 모달 -->
+{% endblock %}
+
+{% block script %}
+<script>
+    let url;
+    let deleteModal = new bootstrap.Modal($("#deleteModal"));
+
+    $(".delete-button").on("click", function() {
+        url = $(this).data("url");
+        deleteModal.show();
+    });
+
+    $("#deleteConfirm").on("click", function() {
+        $(location).attr("href", url);
+    });
+</script>
+{% endblock %}

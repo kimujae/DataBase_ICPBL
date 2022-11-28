@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-3">
+        {% include "message.html" %}
+        {% include "error.html" %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="card">
+                <div class="card-header">
+                    글 수정
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="subject">제목</label>
+                        <input type="text" class="form-control" name="subject" id="subject" value="{{ form.subject.value|default_if_none:board.subject }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="content">내용</label>
+                        <textarea type="text" class="form-control" name="content" id="content" rows="10">{{ form.content.value|default_if_none:board.content }}</textarea>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'board:board_read' board.id %}" class="btn btn-secondary">취소</a>
+                    <div class="float-end">
+                        <button type="submit" class="btn btn-primary">수정</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

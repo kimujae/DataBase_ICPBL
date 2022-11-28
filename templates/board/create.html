@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-3">
+        {% include "error.html" %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="card">
+                <div class="card-header">
+                    글 등록
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="subject">제목</label>
+                        <input type="text" class="form-control" name="subject" id="subject" value="{{ form.subject.value|default_if_none:'' }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="category">카테고리</label>
+                        <select name="category" id="category" value = "{{ form.category.value }}">
+                                <option value="">게시판 선택</option>
+                                <option value="일상">일상</option>
+                                <option value="공지">공지</option>
+                                <option value="민원">장터</option>
+                                <option value="민원">분실물</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="content">내용</label>
+                        <textarea type="text" class="form-control" name="content" id="content" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'board:board_list' %}" class="btn btn-secondary">목록</a>
+                    <div class="float-end">
+                        <button type="submit" class="btn btn-primary">등록</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $("select[name=category]").change(function () {
+        $("#category").submit();
+        });
+    });
+</script>
+{% endblock %}

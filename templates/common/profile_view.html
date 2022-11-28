@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block style %}
+<style>
+    .login {
+        margin-top: 100px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row login justify-content-center">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    사용자 정보
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        사용자 이름
+                        <span class="float-end">{{ user.username }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        이메일
+                        <span class="float-end">{{ user.email }}</span>
+                    </li>
+                </ul>
+                <div class="card-footer">
+                    <a href="{% url 'common:profile_edit' %}" class="btn btn-warning">정보 수정</a>
+                    <div class="float-end">
+                        <a href="{% url 'common:password_edit' %}" class="btn btn-warning">비밀번호 수정</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
