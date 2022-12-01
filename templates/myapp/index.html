@@ -1,0 +1,11 @@
+{% if maintenence_list %}
+    <ul>
+        {% for maintenence in maintenence_list %}
+        <li>
+            <a href="{% url 'myapp:detail' maintenence.main_date %}">{{ maintenence.main_date }}</a>
+        {% endfor %}
+        </li>
+    </ul>
+{% else %}
+        <p>오류.</p>
+{% endif %}
