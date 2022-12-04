@@ -13,7 +13,7 @@
                 {% csrf_token %}
             <div class="mb-3">
                         <label for="category">카테고리</label>
-                        <select  name="category" id="category" value = "{{ form.category.value }}">
+                        <select  name="category" id="category" >
                                 <option value="">게시판 선택</option>
                                 <option value="일상">전체</option>
                                 <option value="일상">일상</option>
@@ -21,7 +21,7 @@
                                 <option value="민원">장터</option>
                                 <option value="민원">분실물</option>
                         </select>
-                        <button  type="submit" class="btn btn-primary">등록</button>
+                        <button  type="submit" class="btn btn-primary">선택</button>
                     </div>
             </form>
         </head>
@@ -42,7 +42,7 @@
                         <tr>
                             <!-- 글번호 = (전제글수) - (시작인덱스) - (현재인덱스) + 1 -->
                             <td>{{ board_list.paginator.count|sub:board_list.start_index|sub:forloop.counter0|add:1 }}</td>
-                            <td>{{ board.category}}</td>
+                            <td>{{ board.category }}</td>
                             <td><a href="{% url 'board:board_read' board.id %}">{{ board.subject }}</a></td>
                             <td>{{ board.author.username }}</td>
                             <td>{{ board.updated_date }}</td>

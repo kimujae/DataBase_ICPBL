@@ -2,47 +2,66 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from django.contrib import messages
-from .models import Board, Reply
-from .forms import BoardForm, ReplyForm, SelectCategory
+from .models import Board, Reply, Category
+from .forms import BoardForm, ReplyForm
 
+
+def main(request):
+    return render(request, "board/board-dong.html")
 
 # 게시글 목록
 @login_required(login_url="common:login")
-def board_list(request):
-
-
-    board_list = Board.objects.order_by("-created_date")
+def board_list(request, category_name):
+    if category_name == '전체' :
+        board_list = Board.objects.order_by("-created_date")
+        category = Category.objects.all
+    else :
+        category = Category.objects.get(slug = category_name)
+        board_list = Board.objects.filter(category = category)
 
 
     page = request.GET.get("page", 1)
     paginator = Paginator(board_list, 10)
     object_list = paginator.get_page(page)
-    context = {"board_list": object_list}
+    context = {"board_list": object_list, 'categories': Category.objects.all(),'category': category}
 
-    if request.method == "POST":
-        form =  SelectCategory(request.POST)
-        print(request.GET)
-        #board_list = board_list.filter(category = form.fields)
+    return render(request, "board/board-dong.html", context)
 
+def category_page(request, slug):
+    if slug == 'no_category':
+        category = '미분류',
+        board_list = Board.objects.filter(category=None)
+    else:
+        category = Category.objects.get(slug=slug)
+        board_list = Board.objects.filter(category=category)
 
-
-    return render(request, "board/list.html", context)
-
+    return render(
+        request,
+        'board/post_list.html',
+        {
+            'board_list': Board.objects.filter(category=category),
+            'categories': Category.objects.all(),
+            'no_category_post_count': Board.objects.filter(category=None).count(),
+            'category': category
+        }
+    )
 
 # 게시글 등록
 @login_required(login_url="common:login")
 def board_create(request):
-
+    category_list = Category.objects.all()
     if request.method == "POST":
         form = BoardForm(request.POST)
         if form.is_valid():
             board = form.save(commit=False)
             board.author = request.user
+            selected_category = get_object_or_404(Category, pk = request.POST.get('selected_category'))
+            board.category = selected_category
             board.save()
             return redirect("board:board_list")
     else:
         form = BoardForm()
-    context = {"form": form}
+    context = {"form": form, "category_list" : category_list}
     return render(request, "board/create.html", context)
 
 
@@ -137,3 +156,4 @@ def reply_delete(request, board_id, reply_id):
     reply.delete()
     messages.success(request, "댓글을 삭제하였습니다.")
     return redirect("board:board_read", board_id=board.id)
+
