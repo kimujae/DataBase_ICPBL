@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+                <main>
+                    <header class="py-10 mb-4 bg-gradient-primary-to-secondary">
+                        <div class="container-xl px-4">
+                            <div class="text-center">
+                                <h1 class="text-white">아파트 관리 시스템에 오신 것을 환영합니다</h1>
+                                <p class="lead mb-0 text-white-50">Welcome to the apartment management system</p>
+                            </div>
+                        </div>
+                    </header>
+                    <!-- Main page content-->
+                    <div class="container-xl px-4">
+                        <h2 class="mt-5 mb-0">즐겨찾기</h2>
+                        <p>Bookmark</p>
+                        <hr class="mt-0 mb-4" />
+                        <div class="row">
+                            <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+                                <a class="d-block lift rounded overflow-hidden mb-2" href="board-danji.html"><img class="img-fluid" src="./assets/img/download/notice.jpg" alt="..." /></a>
+                                <div class="text-center small">공지 게시판</div>
+                            </div>
+                            <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+                                <a class="d-block lift rounded overflow-hidden mb-2" href="maintenance-fee-1.html"><img class="img-fluid" src="./assets/img/download/maintenance.jpg" alt="..." /></a>
+                                <div class="text-center small">관리비 고지서</div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <a class="d-block lift rounded overflow-hidden mb-2" href="reserve-health.html"><img class="img-fluid" src="./assets/img/download/gym.jpeg" alt="..." /></a>
+                                <div class="text-center small">헬스장</div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <footer class="footer-admin mt-auto footer-light">
+                    <div class="container-xl px-4">
+                        
+                    </div>
+                </footer>
+            </div>
+        </div>
+{% endblock %}

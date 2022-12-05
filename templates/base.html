@@ -40,6 +40,7 @@
                     </div>
                 </li>
                 <!-- User Dropdown-->
+                {%if login_session %}
                 <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
                     <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="{% static 'img/illustrations/profiles/profile-1.png' %}"/></a>
                     <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
@@ -63,6 +64,19 @@
                 </li>
             </ul>
         </nav>
+        {% else %}
+        <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
+                    <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="assets/img/favicon.png" /></a>
+                    <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
+                        <a class="dropdown-item" href="auth-login-basic.html">
+                            <div class="dropdown-item-icon"><i data-feather="log-in"></i></div>
+                            로그인
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        {% endif %}
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <nav class="sidenav shadow-right sidenav-light">

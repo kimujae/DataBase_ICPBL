@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from common.models import User
 
 # Create your models here.
 
@@ -11,7 +11,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return f'/blog/category/{self.slug}/'
+        return f'/board/category/{self.slug}/'
     class Meta:
         verbose_name_plural = 'Categories'
 

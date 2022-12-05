@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html lang="en" xmlns="http://www.w3.org/1999/html">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,7 +8,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Register - SB Admin Pro</title>
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="{%static 'css/styles.css' %}" rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
@@ -25,19 +26,31 @@
                                     <div class="card-body">
 
                                         <!-- Registration form-->
-                                        <form>
-                                                <!-- Form Group (ID)-->
-                                            <div class="mb-1">
-                                                <label class="small mb-1" for="inputID">ID</label>
-                                                <input class="form-control" id="inputID" type="email" aria-describedby="emailHelp" placeholder="Enter ID" />
+                                        <form action = "" method="post">
+                                            {% csrf_token %}
+                                            <div class="row gx-3">
+                                                <div class="col-md-6">
+                                                    <!-- Form Group (ID)-->
+                                                    <div class="mb-1">
+                                                        <label class="small mb-1" for="user_id">ID</label>
+                                                        <input class="form-control" name="user_id" id="user_id" type="text"  placeholder="Enter ID" value="{{form.user_id.value}}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <!-- Form Group (세대주)-->
+                                                    <div class="mb-1">
+                                                        <label class="small mb-1" for="inputConfirmholder">세대주 입력</label>
+                                                        <input class="form-control" id="inputConfirmholder" name = "inputConfirmholder" type="text" placeholder="Enter HouseHolder" />
+                                                    </div>
+                                                </div>
                                             </div>
                                             <!-- Form Row    -->
                                             <div class="row gx-3">
                                                 <div class="col-md-6">
                                                     <!-- Form Group (password)-->
                                                     <div class="mb-1">
-                                                        <label class="small mb-1" for="inputPassword">비밀번호</label>
-                                                        <input class="form-control" id="inputPassword" type="password" placeholder="Enter password" />
+                                                        <label class="small mb-1" for="user_pwd">비밀번호</label>
+                                                        <input class="form-control" name = "user_pwd" id="user_pwd" type="password" placeholder="Enter password" value="{{ form.user_pw.value}}" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -53,15 +66,15 @@
                                                 <div class="col-md-6">
                                                     <!-- Form Group (first name)-->
                                                     <div class="mb-1">
-                                                        <label class="small mb-1" for="inputFirstName">성</label>
-                                                        <input class="form-control" id="inputFirstName" type="text" placeholder="Enter first name" />
+                                                        <label class="small mb-1" for="user_first_name">성</label>
+                                                        <input class="form-control" name = "user_first_name" id="user_first_name" type="text" placeholder="Enter first name" value="{{ form.user_first_name.value }}" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <!-- Form Group (last name)-->
                                                     <div class="mb-1">
-                                                        <label class="small mb-1" for="inputLastName">이름</label>
-                                                        <input class="form-control" id="inputLastName" type="text" placeholder="Enter last name" />
+                                                        <label class="small mb-1" for="user_last_name">이름</label>
+                                                        <input class="form-control" name = "user_last_name" id="user_last_name" type="text" placeholder="Enter last name"value="{{ form.user_last_name.value}}" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -69,60 +82,30 @@
                                             <div class="row gx-3">
                                                 <div class="col-md-6">
                                                     <!-- Form Group (building)-->
+
                                                     <div class="mb-1">
-                                                        <label class="small mb-1" for="inputbuilding_number">동</label>
-                                                        <input class="form-control" id="inputbuilding_number" type="text" placeholder="Enter building No." />
+                                                        <label class="small mb-1" for = "building_num" >동</label>
+                                                        <select class ="form-select" for = "building_num" value = {{form.user_building_num}} >
+                                                                    <option id = "building_num" name = "building_num" value ={{form.user_building_num.value}}> </option>
+                                                                </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <!-- Form Group (room)-->
                                                     <div class="mb-1">
-                                                        <label class="small mb-1" for="inputroom_number">호</label>
-                                                        <input class="form-control" id="inputroom_number" type="text" placeholder="Enter room No." />
+                                                        <label class="small mb-1">호</label>
+                                                                <select class ="form-select" for = "house_num" value = {{form.user_house_num}} >
+                                                                    <option id = "house_num" name = "house_num" value ={{form.house_num.value}}> </option>
+                                                                </select>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Form Row-->
-                                            <div class="row gx-3">
-                                                <div class="col-md-6">
-                                                    <!-- Form Group (phone_number)-->
-                                                    <div class="mb-1">
-                                                        <label class="small mb-1" for="inputphone_number">전화번호</label>
-                                                        <input class="form-control" id="inputphone_number" type="text" placeholder="Enter phone number" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <!-- Form Group (grade)-->
-                                                    <div class="mb-1">
-                                                        <label class="small mb-1" for="inputgrade">등급</label>
-                                                        <input class="form-control" id="inputgrade" type="text" placeholder="Enter grade" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Form Row-->
-                                            <div class="row gx-3">
-                                                <div class="col-md-6">
-                                                    <!-- Form Group (owner_name)-->
-                                                    <div class="mb-1">
-                                                        <label class="small mb-1" for="inputowner_name">세대주</label>
-                                                        <input class="form-control" id="inputowner_name" type="text" placeholder="Enter owner name" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <!-- Form Group (email)-->
-                                                    <div class="mb-1">
-                                                        <label class="small mb-1" for="inputEmailAddress">E-mail</label>
-                                                        <input class="form-control" id="inputEmailAddress" type="text" placeholder="Enter E-mail" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
                                             <!-- Form Group (create account submit)-->
-                                            <a class="btn btn-primary btn-block" href="auth-login-basic.html">회원가입</a>
+                                            <button type="submit" class="btn btn-primary">회원가입</button>
                                         </form>
                                     </div>
                                     <div class="card-footer text-center">
-                                        <div class="small"><a href="auth-login-basic.html">이미 회원이신가요?</a></div>
+                                        <div class="small"><a>이미 회원이신가요?</a></div>
                                     </div>
                                     </div>
                                 </div>

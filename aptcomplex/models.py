@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Houseinfo(models.Model):
-    BUILDING_NUM_CHOICES = [
+    BUILDING_NUM_CHOICES = (
         (101, '101동'),
         (102, '102동'),
         (103, '103동'),
@@ -11,9 +11,9 @@ class Houseinfo(models.Model):
         (105, '105동'),
         (106, '106동'),
         (107, '107동'),
-    ]
+    )
     building_num = models.IntegerField(max_length = 8, choices = BUILDING_NUM_CHOICES, default = "")
-    HOUSE_NUM_CHOICES = [
+    HOUSE_NUM_CHOICES = (
         (101, '101호'),(102, '102호'),(103, '103호'),(104, '104호'),(105, '105호'),(106, '106호'),(107, '107호'),
         (201, '201호'),(202, '202호'),(203, '203호'),(204, '204호'),(205, '205호'),(206, '206호'),(207, '207호'),
         (301, '301호'),(302, '302호'),(303, '303호'),(304, '304호'),(305, '305호'),(306, '306호'),(307, '307호'),
@@ -29,9 +29,18 @@ class Houseinfo(models.Model):
         (1301, '1301호'),(1302, '1302호'),(1303, '1303호'),(1304, '1304호'),(1305, '1305호'),(1306, '1306호'),(1307, '1307호'),
         (1401, '1401호'),(1402, '1402호'),(1403, '1403호'),(1404, '1404호'),(1405, '1405호'),(1406, '1406호'),(1407, '1407호'),
         (1501, '1501호'),(1502, '1502호'),(1503, '1503호'),(1504, '1504호'),(1505, '1505호'),(1506, '1506호'),(1507, '1507호'),
-    ]
+    )
     house_num = models.IntegerField(max_length = 6, choices = HOUSE_NUM_CHOICES, default ="")
     house_holder = models.CharField(max_length = 16, blank = True)
 
     def __str__(self):
         return str(self.building_num) + "동" + str(self.house_num) +"호"
+
+    def get_building_num(self):
+        return self.building_num
+
+    def get_house_num(self):
+        return self.house_num
+
+    def get_house_holder(self):
+        return self.house_holder

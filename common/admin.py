@@ -1,13 +1,15 @@
 from django.contrib import admin
+from .models import User
 
 # Register your models here.
-#@admin.register(User)
+
+@admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_diplay =(
         'user_id',
         'user_pw',
-        'user_name',
-        'user_email',
+        'user_first_name',
+        'user_last_name',
         'user_reg_dt',
-       # 'user_house'
+        'user_house'
     )
