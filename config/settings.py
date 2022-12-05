@@ -34,12 +34,14 @@ INSTALLED_APPS = [
     'common.apps.CommonConfig',
     'board.apps.BoardConfig',
     'aptcomplex.apps.AptcomplexConfig',
+    'maintenece.apps.MainteneceConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [

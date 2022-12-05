@@ -52,11 +52,11 @@
                             </div>
                         </h6>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#!">
+                        <a class="dropdown-item" href="{% url 'common:profile_view' %}">
                             <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                             설정
                         </a>
-                        <a class="dropdown-item" href="#!">
+                        <a class="dropdown-item" href="{% url 'common:logout' %}">
                             <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
                             로그아웃
                         </a>
@@ -68,7 +68,7 @@
         <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
                     <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="assets/img/favicon.png" /></a>
                     <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
-                        <a class="dropdown-item" href="auth-login-basic.html">
+                        <a class="dropdown-item" href="{% url 'common:login' %}">
                             <div class="dropdown-item-icon"><i data-feather="log-in"></i></div>
                             로그인
                         </a>
@@ -100,7 +100,7 @@
                                     <div class="collapse" id="pagesCollapseAccount" data-bs-parent="#accordionSidenavPagesMenu">
                                         <nav class="sidenav-menu-nested nav">
                                             <a class="nav-link" href="board-danji.html">단지 게시판</a>
-                                            <a class="nav-link" href="board-dong.html">동 게시판</a>
+                                            <a class="nav-link" href="{% url 'board:board_list' category_name='공지'  %}"">동 게시판</a>
                                         </nav>
                                     </div>
                                     <!-- Nested Sidenav Accordion (Pages -> Authentication)-->

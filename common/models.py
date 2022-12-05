@@ -1,6 +1,12 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 from aptcomplex.models import Houseinfo
+
 # Create your models here.
+
+
+
+
 class User(models.Model):
     BUILDING_NUM_CHOICES = (
         (101, '101동'),
@@ -11,7 +17,7 @@ class User(models.Model):
         (106, '106동'),
         (107, '107동'),
     )
-    user_building_num = models.IntegerField(max_length=8, choices=BUILDING_NUM_CHOICES, default="")
+    #user_building_num = models.IntegerField(max_length=8, choices=BUILDING_NUM_CHOICES, default="")
     HOUSE_NUM_CHOICES = (
         (101, '101호'), (102, '102호'), (103, '103호'), (104, '104호'), (105, '105호'), (106, '106호'), (107, '107호'),
         (201, '201호'), (202, '202호'), (203, '203호'), (204, '204호'), (205, '205호'), (206, '206호'), (207, '207호'),
@@ -35,7 +41,7 @@ class User(models.Model):
         (1501, '1501호'), (1502, '1502호'), (1503, '1503호'), (1504, '1504호'), (1505, '1505호'), (1506, '1506호'),
         (1507, '1507호'),
     )
-    user_house_num = models.IntegerField(max_length=6, choices=HOUSE_NUM_CHOICES, default="")
+    #user_house_num = models.IntegerField(max_length=6, choices=HOUSE_NUM_CHOICES, default="")
 
 
     user_id = models.CharField(max_length=32, unique = True, verbose_name = '아이디')
@@ -55,4 +61,9 @@ class User(models.Model):
         verbose_name_plural = '유저'
 
 
-
+class UserProfile(models.Model):
+    nickname = models.CharField(max_length=128, unique= True, verbose_name= '닉네임', default='')
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.EmailField(max_length=128, unique=True, verbose_name='이메일', default='')
+    phone_num = PhoneNumberField(unique = True, null = True, blank = True, default='')
+    car_num = models.CharField(max_length=128, default='')

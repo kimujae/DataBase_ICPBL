@@ -4,6 +4,8 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from .models import Board, Reply, Category
 from .forms import BoardForm, ReplyForm
+from aptcomplex.models import Houseinfo
+from common.models import User
 
 
 def main(request):
@@ -12,20 +14,33 @@ def main(request):
 # 게시글 목록
 @login_required(login_url="common:login")
 def board_list(request, category_name):
-    if category_name == '전체' :
-        board_list = Board.objects.order_by("-created_date")
-        category = Category.objects.all
-    else :
-        category = Category.objects.get(slug = category_name)
-        board_list = Board.objects.filter(category = category)
+    login_session = request.session.get('login_session', '')
+    context = {'login_session': login_session}
+    user = User.objects.get(user_id=login_session)
+    building_num = user.user_house_holder.building_num
+    house_info = Houseinfo.objects.filter(building_num = building_num)
+    users = User.objects.get(user_house_holder__in= house_info)
+
+    category = Category.objects.get(slug =category_name)
+    board_list = Board.objects.filter(author = users , category = category).order_by("-created_date")
+
 
 
     page = request.GET.get("page", 1)
     paginator = Paginator(board_list, 10)
     object_list = paginator.get_page(page)
-    context = {"board_list": object_list, 'categories': Category.objects.all(),'category': category}
+    context = {"board_list": object_list, 'category': category}
 
     return render(request, "board/board-dong.html", context)
+
+
+
+
+
+
+
+
+
 
 def category_page(request, slug):
     if slug == 'no_category':
@@ -49,16 +64,19 @@ def category_page(request, slug):
 # 게시글 등록
 @login_required(login_url="common:login")
 def board_create(request):
+    login_session = request.session.get('login_session', '')
+    user = User.objects.get(user_id = login_session)
+
     category_list = Category.objects.all()
     if request.method == "POST":
         form = BoardForm(request.POST)
         if form.is_valid():
             board = form.save(commit=False)
-            board.author = request.user
+            board.author = user
             selected_category = get_object_or_404(Category, pk = request.POST.get('selected_category'))
             board.category = selected_category
             board.save()
-            return redirect("board:board_list")
+            return redirect("board:board_list" , category_name = board.category.name)
     else:
         form = BoardForm()
     context = {"form": form, "category_list" : category_list}
