@@ -1,10 +1,13 @@
 from django.contrib import admin
 from django.urls import path, include
-from board import views as board_views 
+
+import aptcomplex.views
+from board import views as board_views
+from aptcomplex import views
 
 
 urlpatterns = [
-    path("", board_views.board_list),
+    path("", aptcomplex.views.index),
     path("admin/", admin.site.urls),
     path("common/", include("common.urls")),
     path("board/", include("board.urls")),

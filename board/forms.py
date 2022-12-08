@@ -21,10 +21,3 @@ class ReplyForm(forms.ModelForm):
             "content": "내용",
         }
 
-class SelectCategory(forms.ModelForm):
-    class Meta:
-        model = Board
-        fields = ["category"]
-        labels = {
-            "category" : "카테고리",
-        }

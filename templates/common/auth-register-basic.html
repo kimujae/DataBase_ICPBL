@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Register - SB Admin Pro</title>
+        <link href="{%static 'css/styles.css' %}" rel="stylesheet" />
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+        <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="bg-primary">
+        <div id="layoutAuthentication">
+            <div id="layoutAuthentication_content">
+                <main>
+                    <div class="container-xl px-4">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7">
+                                <!-- Basic registration form-->
+                                <div class="card shadow-lg border-0 rounded-lg mt-3">
+                                    <div class="card-header justify-content-center"><h1 class="fw-light my-1">회원가입</h3></div>
+                                    <div class="card-body">
+
+                                        <!-- Registration form-->
+                                        <form action = "" method="post">
+                                            {% csrf_token %}
+                                            <div class="row gx-3">
+                                                <div class="col-md-6">
+                                                    <!-- Form Group (ID)-->
+                                                    <div class="mb-1">
+                                                        <label class="small mb-1" for="user_id">ID</label>
+                                                        <input class="form-control" name="user_id" id="user_id" type="text"  placeholder="Enter ID" value="{{form.user_id.value}}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <!-- Form Group (세대주)-->
+                                                    <div class="mb-1">
+                                                        <label class="small mb-1" for="user_house_holder">세대주 입력</label>
+                                                        <input class="form-control" id="user_house_holder" name = "user_house_holder" type="text" placeholder="Enter HouseHolder" value = "{{selectform.user_house_holder.value}}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Form Row    -->
+                                            <div class="row gx-3">
+                                                <div class="col-md-6">
+                                                    <!-- Form Group (password)-->
+                                                    <div class="mb-1">
+                                                        <label class="small mb-1" for="user_pwd">비밀번호</label>
+                                                        <input class="form-control" name = "user_pwd" id="user_pwd" type="password" placeholder="Enter password" value="{{ form.user_pw.value}}" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <!-- Form Group (confirm password)-->
+                                                    <div class="mb-1">
+                                                        <label class="small mb-1" for="inputConfirmPassword">비밀번호 확인</label>
+                                                        <input class="form-control" id="inputConfirmPassword" type="password" placeholder="Confirm password" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Form Row-->
+                                            <div class="row gx-3">
+                                                <div class="col-md-6">
+                                                    <!-- Form Group (first name)-->
+                                                    <div class="mb-1">
+                                                        <label class="small mb-1" for="user_first_name">성</label>
+                                                        <input class="form-control" name = "user_first_name" id="user_first_name" type="text" placeholder="Enter first name" value="{{ form.user_first_name.value }}" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <!-- Form Group (last name)-->
+                                                    <div class="mb-1">
+                                                        <label class="small mb-1" for="user_last_name">이름</label>
+                                                        <input class="form-control" name = "user_last_name" id="user_last_name" type="text" placeholder="Enter last name"value="{{ form.user_last_name.value}}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Form Row-->
+                                            <div class="row gx-3">
+                                                <div class="col-md-6">
+                                                    <!-- Form Group (building)-->
+
+                                                    <div class="mb-1">
+                                                        <label class="small mb-1" for = "building_num" >동</label>
+                                                        <select class ="form-select" for = "building_num" value = {{selectform.user_building_num}} >
+                                                                    <option id = "building_num" name = "building_num" value ={{selectform.user_building_num.value}}> </option>
+                                                                </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <!-- Form Group (room)-->
+                                                    <div class="mb-1">
+                                                        <label class="small mb-1">호</label>
+                                                                <select class ="form-select" for = "house_num" value = {{selectform.user_house_num}} >
+                                                                    <option id = "house_num" name = "house_num" value ={{selectform.user_house_num.value}}> </option>
+                                                                </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Form Group (create account submit)-->
+                                            <button type="submit" class="btn btn-primary">회원가입</button>
+                                        </form>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <div class="small"><a href ="{% url 'common:login' %}">이미 회원이신가요?</a></div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            <div id="layoutAuthentication_footer">
+                <footer class="footer-admin mt-auto footer-dark">
+                    <div class="container-xl px-4">
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+    </body>
+</html>

@@ -19,14 +19,14 @@
                         <input type="text" class="form-control" name="subject" id="subject" value="{{ form.subject.value|default_if_none:'' }}">
                     </div>
                     <div class="mb-3">
-                        <label for="category">카테고리</label>
-                        <select name="category" id="category" value = "{{ form.category.value }}">
-                                <option value="">게시판 선택</option>
-                                <option value="일상">일상</option>
-                                <option value="공지">공지</option>
-                                <option value="민원">장터</option>
-                                <option value="민원">분실물</option>
-                        </select>
+                        <label for="category_list">카테고리</label>
+                        {% if category_list %}
+                            <select name="selected_category" id="selected_category" class ="form-select">
+                            {% for category in category_list %}
+                                <option value={{category.id}}>{{ category.name }}</option>
+                            {% endfor %}
+                             </select>
+                        {% endif %}
                     </div>
                     <div class="mb-3">
                         <label for="content">내용</label>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="{% url 'board:board_list' %}" class="btn btn-secondary">목록</a>
+                    <a  class="btn btn-secondary">목록</a>
                     <div class="float-end">
                         <button type="submit" class="btn btn-primary">등록</button>
                     </div>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>아파트 관리 시스템</title>
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        <link rel="icon" type="image/x-icon" href="../../../../OneDrive/바탕%20화면/DB-12-05/DB-12-05/Frontend/dist/assets/img/favicon.png" />
+        <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+
+{% block content %}
+<main>
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-xl px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <div class="page-header-icon"><i data-feather="user"></i></div>
+                            마이페이지
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main page content-->
+    <div class="container-xl px-4 mt-4">
+        <!-- Account page navigation-->
+        <nav class="nav nav-borders">
+            <a class="nav-link" href="mypage-profile.html">개인정보 변경</a>
+            <a class="nav-link" href="../../../../OneDrive/바탕%20화면/DB-12-05/DB-12-05/Frontend/dist/mypage-notice.html">알림</a>
+            <a class="nav-link" href="../../../../OneDrive/바탕%20화면/DB-12-05/DB-12-05/Frontend/dist/mypage-drop.html">계정 탈퇴</a>
+        </nav>
+        <hr class="mt-0 mb-4" />
+        <div class="row">
+            <div class="col-xl-4">
+                <!-- Profile picture card-->
+                <div class="card mb-4 mb-xl-0">
+                    <div class="card-header">프로필 사진</div>
+                    <div class="card-body text-center">
+                        <!-- Profile picture image-->
+                        <img class="img-account-profile rounded-circle mb-2" src="../../../../OneDrive/바탕%20화면/DB-12-05/DB-12-05/Frontend/dist/assets/img/illustrations/profiles/profile-1.png" alt="" />
+                        <!-- Profile picture help block-->
+                        <div class="small font-italic text-muted mb-4">JPG 또는 PNG (5MB 제한)</div>
+                        <!-- Profile picture upload button-->
+                        <button class="btn btn-primary" type="button">이미지 업로드</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header">프로필 내용</div>
+                    <div class="card-body">
+                        <form action ="" method="post">
+                            {% csrf_token %}
+                            <!-- Form Group (username)-->
+                            <div class="mb-3">
+
+                                <label class="small mb-1" for="nickname">닉네임</label>
+                                {%if profile %}
+                                <input disabled class="form-control" id="nicknamed" name = "nicknamed" type="text"  value="{{profile.nickname}}" />
+                                {%else %}
+                                 <input class="form-control" id="nickname" name = "nickname" type="text" placeholder="Enter your username" value="{{form.nickname.value|default_if_none:''}}" />
+                                {%endif%}
+                            </div>
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputFirstName">성</label>
+                                    <input disabled class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="{{user.user_first_name}}" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputLastName">이름</label>
+                                    <input disabled class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="{{user.user_last_name}}" />
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputDong">동</label>
+                                    <input disabled class="form-control" id="inputDong" type="number" placeholder="Enter your dong" value="{{user.user_house_holder.building_num}}" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputHo">호</label>
+                                    <input disabled class="form-control" id="inputHo" type="number" placeholder="Enter your ho" value="{{user.user_house_holder.house_num}}" />
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="email">이메일</label>
+                                <input class="form-control" id="email" name ="email" type="email" placeholder="Enter your email address" value="{{form.email.value|default_if_none:''}}" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputHousehold">세대주</label>
+                                <input disabled class="form-control" id="inputHousehold" type="text" placeholder="Enter your household" value="{{user.user_house_holder.house_holder}}" />
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="phone_num">전화번호</label>
+                                    <input class="form-control" id="phone_num" name ="phone_num" type="tel" placeholder="Enter your valid phone number(+821055521368)" value = "{{form.phone_num.value|default_if_none:''}}"  />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="car_num">차량번호</label>
+                                    <input class="form-control" id="car_num" name ="car_num" type="text"  placeholder="차량번호" value="{{form.car_num.value|default_if_none:''}}" />
+                                </div>
+                            </div>
+                            <!-- Save changes button-->
+                            <button type="submit" class="btn btn-primary" >수정하기</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+        {% endblock %}
+
