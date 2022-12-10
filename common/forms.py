@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
-from phonenumber_field.modelfields import PhoneNumberField
 from .models import User,UserProfile
 from aptcomplex.models import Houseinfo
 from argon2 import PasswordHasher,exceptions
@@ -10,7 +9,7 @@ class ProfileEditForm(forms.Form):
 
     nickname = forms.CharField(max_length=128, label = '닉네임', required=False)
     email = forms.EmailField(max_length=128 ,label="이메일", required=False)
-    phone_num =  PhoneNumberField(unique = True, blank= True)
+    phone_num = forms.CharField(max_length= 128, label='전화번호', required=False)
     car_num = forms.CharField(max_length= 128, label='차량번호', required=False)
 
 

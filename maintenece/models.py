@@ -1,8 +1,9 @@
 from django.db import models
-
+from common.models import User
 # Create your models here.
 
 class Maintenence(models.Model):
+    House = models.ForeignKey(User, on_delete=models.CASCADE, default= '')
     main_date = models.IntegerField(primary_key=True)
     heatc = models.BigIntegerField(blank=True, null=True)
     heatp = models.BigIntegerField(blank=True, null=True)

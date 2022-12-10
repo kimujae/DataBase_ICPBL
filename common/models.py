@@ -1,5 +1,4 @@
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
 from aptcomplex.models import Houseinfo
 
 # Create your models here.
@@ -65,5 +64,5 @@ class UserProfile(models.Model):
     nickname = models.CharField(max_length=128, unique= True, verbose_name= '닉네임', default='')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(max_length=128, unique=True, verbose_name='이메일', default='')
-    phone_num = PhoneNumberField(unique = True, null = True, blank = True, default='')
+    phone_num = models.CharField(max_length=128,  verbose_name='전화번호', default='')
     car_num = models.CharField(max_length=128, default='')

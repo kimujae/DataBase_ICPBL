@@ -12,8 +12,8 @@ def main(request):
     return render(request, "board/board-dong.html")
 
 # 게시글 목록
-@login_required(login_url="common:login")
-def board_list(request, category_name):
+
+def board_list_dong(request, category_name):
     login_session = request.session.get('login_session', '')
     context = {'login_session': login_session}
     user = User.objects.get(user_id=login_session)
@@ -34,9 +34,20 @@ def board_list(request, category_name):
     return render(request, "board/board-dong.html", context)
 
 
+def board_list_complaint(request, category_name):
+    login_session = request.session.get('login_session', '')
+    context = {'login_session': login_session}
+    user = User.objects.get(user_id=login_session)
 
+    category = Category.objects.get(slug=category_name)
+    board_list = Board.objects.filter(category=category).order_by("-created_date")
 
+    page = request.GET.get("page", 1)
+    paginator = Paginator(board_list, 10)
+    object_list = paginator.get_page(page)
+    context = {"board_list": object_list, 'category': category}
 
+    return render(request, "board/board-dong.html", context)
 
 
 
@@ -62,7 +73,7 @@ def category_page(request, slug):
     )
 
 # 게시글 등록
-@login_required(login_url="common:login")
+
 def board_create(request):
     login_session = request.session.get('login_session', '')
     user = User.objects.get(user_id = login_session)
@@ -84,7 +95,7 @@ def board_create(request):
 
 
 # 게시글 보기
-@login_required(login_url="common:login")
+
 def board_read(request, board_id):
     board = get_object_or_404(Board, pk=board_id)
     reply_list = Reply.objects.filter(board=board.id).order_by("-created_date")
@@ -93,7 +104,7 @@ def board_read(request, board_id):
 
 
 # 게시글 수정
-@login_required(login_url="common:login")
+
 def board_update(request, board_id):
     board = get_object_or_404(Board, pk=board_id)
     if board.author != request.user:
@@ -113,7 +124,7 @@ def board_update(request, board_id):
 
 
 # 게시글 삭제
-@login_required(login_url="common:login")
+
 def board_delete(request, board_id):
     board = get_object_or_404(Board, pk=board_id)
     if board.author != request.user:
@@ -164,7 +175,7 @@ def reply_update(request, board_id, reply_id):
 
 
 # 게시글 삭제
-@login_required(login_url="common:login")
+
 def reply_delete(request, board_id, reply_id):
     board = get_object_or_404(Board, pk=board_id)
     reply = get_object_or_404(Reply, pk=reply_id)

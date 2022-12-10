@@ -5,6 +5,7 @@ def index(request) :
     context={}
 
     login_session = request.session.get('login_session','')
+    user = User.objects.get(user_id=login_session)
 
     if login_session =='':
         context['login_session']= False
