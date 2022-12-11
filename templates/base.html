@@ -10,6 +10,7 @@
         <meta name="author" content="" />
         <title>아파트 관리 시스템</title>
         <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+        <link href="https://unpkg.com/easymde/dist/easymde.min.css" rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.png' %}" />
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
@@ -18,7 +19,7 @@
         <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
             <!-- Sidenav Toggle Button-->
             <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu"></i></button>
-            <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="index.html">아파트 관리 시스템</a>
+            <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="{% url 'aptcomplex:index' %}">아파트 관리 시스템</a>
             <!-- Navbar Search Input-->
             <form class="form-inline me-auto d-none d-lg-block me-3">
                 <div class="input-group input-group-joined input-group-solid">
@@ -47,8 +48,8 @@
                         <h6 class="dropdown-header d-flex align-items-center">
                             <img class="dropdown-user-img" src="{% static 'img/illustrations/profiles/profile-1.png' %}" />
                             <div class="dropdown-user-details">
-                                <div class="dropdown-user-details-name">홍길동</div>
-                                <div class="dropdown-user-details-email">abc123@database.com</div>
+                                <div class="dropdown-user-details-name">{{user.user_first_name}}{{user.user_last_name}}</div>
+                                <div class="dropdown-user-details-email">{{user.email}}</div>
                             </div>
                         </h6>
                         <div class="dropdown-divider"></div>
@@ -66,7 +67,7 @@
         </nav>
         {% else %}
         <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
-                    <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="assets/img/favicon.png" /></a>
+                    <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="{% static 'img/favicon.png' %}" /></a>
                     <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
                         <a class="dropdown-item" href="{% url 'common:login' %}">
                             <div class="dropdown-item-icon"><i data-feather="log-in"></i></div>
@@ -115,8 +116,8 @@
                                         </nav>
                                     </div>
 
-                                    <a class="nav-link" href="pricing.html">중고거래 게시판</a>
-                                    <a class="nav-link" href="invoice.html">분실물 게시판</a>
+                                    <a class="nav-link" href="{% url 'board:board_list_joonggo' category_name='중고' %}">중고거래 게시판</a>
+                                    <a class="nav-link" href="{% url 'board:board_list_bunsil' category_name='분실물' %}">분실물 게시판</a>
                                 </nav>
                             </div>
                             <!-- Sidenav Accordion (Applications)-->
@@ -128,8 +129,8 @@
                             <div class="collapse" id="collapseApps" data-bs-parent="#accordionSidenav">
                                 <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavAppsMenu">
                                     <!-- Nested Sidenav Accordion (Apps -> Knowledge Base)-->
-                                    <a class="nav-link" href="maintenance-fee-1.html">관리비 고지서</a>
-                                    <a class="nav-link" href="maintenance-fee-2.html">관리비 그래프</a>
+                                    <a class="nav-link" href="{% url 'maintenence:index'%}">관리비 고지서</a>
+                                    <a class="nav-link" href="{% url 'maintenence:detail'%}">관리비 그래프</a>
                                     <div class="collapse" id="appsCollapsePostsManagement" data-bs-parent="#accordionSidenavAppsMenu">
                                         <!-- <nav class="sidenav-menu-nested nav">
                                             <a class="nav-link" href="blog-management-posts-list.html">Posts List</a>
@@ -159,9 +160,9 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" data-bs-parent="#accordionSidenav">
                                 <nav class="sidenav-menu-nested nav">
-                                    <a class="nav-link" href="multi-tenant-select.html">헬스장</a>
-                                    <a class="nav-link" href="wizard.html">수영장</a>
-                                    <a class="nav-link" href="wizard.html">독서실</a>
+                                    <a class="nav-link" href="{% url 'reservation:hreservation'%}">헬스장</a>
+                                    <a class="nav-link" href="{% url 'reservation:reservation'%}">수영장</a>
+                                    <a class="nav-link" href="{% url 'reservation:sreservation'%}">독서실</a>
                                 </nav>
                             </div>
                         </div>
@@ -175,4 +176,6 @@
 <script src="{% static 'js/scripts.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 <script src="{% static 'js/datatables/datatables-simple-demo.js' %}"></script>
+<script src="https://unpkg.com/easymde/dist/easymde.min.js" crossorigin="anonymous"></script>
+<script src="{% static 'js/markdown.js' %}"></script>
 

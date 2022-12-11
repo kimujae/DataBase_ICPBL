@@ -34,7 +34,8 @@ INSTALLED_APPS = [
     'common.apps.CommonConfig',
     'board.apps.BoardConfig',
     'aptcomplex.apps.AptcomplexConfig',
-    'maintenece.apps.MainteneceConfig',
+    'maintenence.apps.MaintenenceConfig',
+    'reservation.apps.ReservationConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -81,10 +82,6 @@ DATABASES = {
      'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'XE',
-        'USER': 'USER1',
-        'PASSWORD':'1234',
-        'HOST' : 'DESKTOP-4G64VU8',
-        'PORT' : '1521',
     }
 }
 
@@ -137,3 +134,8 @@ LOGIN_REDIRECT_URL = '/common/profile_view'
 
 # 로그아웃 성공 후 이동하는 URL
 LOGOUT_REDIRECT_URL = '/common/login'
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'

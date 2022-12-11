@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>아파트 관리 시스템</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/css/styles.css" rel="stylesheet" />
+        <link rel="icon" type="image/x-icon" href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/assets/img/favicon.png" />
+        <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="nav-fixed">
+        <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
+            <!-- Sidenav Toggle Button-->
+            <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu"></i></button>
+            <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/index.html">아파트 관리 시스템</a>
+            <!-- Navbar Search Input-->
+            <form class="form-inline me-auto d-none d-lg-block me-3">
+                <div class="input-group input-group-joined input-group-solid">
+                </div>
+            </form>
+            <!-- Navbar Items-->
+            <ul class="navbar-nav align-items-center ms-auto">
+                <!-- Navbar Search Dropdown-->
+                <li class="nav-item dropdown no-caret me-3 d-lg-none">
+                    <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="searchDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="search"></i></a>
+                    <!-- Dropdown - Search-->
+                    <div class="dropdown-menu dropdown-menu-end p-3 shadow animated--fade-in-up" aria-labelledby="searchDropdown">
+                        <form class="form-inline me-auto w-100">
+                            <div class="input-group input-group-joined input-group-solid">
+                                <input class="form-control pe-0" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                                <div class="input-group-text"><i data-feather="search"></i></div>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+                <!-- User Dropdown-->
+                <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
+                    <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/assets/img/illustrations/profiles/profile-1.png" /></a>
+                    <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
+                        <h6 class="dropdown-header d-flex align-items-center">
+                            <img class="dropdown-user-img" src="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/assets/img/illustrations/profiles/profile-1.png" />
+                            <div class="dropdown-user-details">
+                                <div class="dropdown-user-details-name">홍길동</div>
+                                <div class="dropdown-user-details-email">abc123@database.com</div>
+                            </div>
+                        </h6>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/mypage-profile.html">
+                            <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
+                            설정
+                        </a>
+                        <a class="dropdown-item" href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/logout.html">
+                            <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
+                            로그아웃
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sidenav shadow-right sidenav-light">
+                    <div class="sidenav-menu">
+                        <div class="nav accordion" id="accordionSidenav">
+                            <!-- Sidenav Heading (Custom)-->
+                            <div class="sidenav-menu-heading"></div>
+                            <!-- Sidenav Accordion (Pages)-->
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                                <div class="nav-link-icon"></i></div>
+                                게시판
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapsePages" data-bs-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                                    <!-- Nested Sidenav Accordion (Pages -> Account)-->
+                                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAccount" aria-expanded="false" aria-controls="pagesCollapseAccount">
+                                        공지 게시판
+                                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseAccount" data-bs-parent="#accordionSidenavPagesMenu">
+                                        <nav class="sidenav-menu-nested nav">
+                                            <a class="nav-link" href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/board-danji.html">단지 게시판</a>
+                                            <a class="nav-link" href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/board-dong.html">동 게시판</a>
+                                        </nav>
+                                    </div>
+                                    <!-- Nested Sidenav Accordion (Pages -> Authentication)-->
+                                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                        민원 게시판
+                                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseAuth" data-bs-parent="#accordionSidenavPagesMenu">
+                                        <nav class="sidenav-menu-nested nav">
+                                            <a class="nav-link" href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/complaint-danji.html">단지 게시판</a>
+                                            <a class="nav-link" href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/complaint-dong.html">동 게시판</a>
+                                        </nav>
+                                    </div>
+
+                                    <a class="nav-link" href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/joonggo.html">중고거래 게시판</a>
+                                    <a class="nav-link" href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/lost.html">분실물 게시판</a>
+                                </nav>
+                            </div>
+                            <!-- Sidenav Accordion (Applications)-->
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseApps" aria-expanded="false" aria-controls="collapseApps">
+                                <div class="nav-link-icon"></i></div>
+                                관리비
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseApps" data-bs-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavAppsMenu">
+                                    <!-- Nested Sidenav Accordion (Apps -> Knowledge Base)-->
+                                    <a class="nav-link" href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/maintenance-fee-1.html">관리비 고지서</a>
+                                    <a class="nav-link" href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/maintenance-fee-2.html">관리비 그래프</a>
+                                    <div class="collapse" id="appsCollapsePostsManagement" data-bs-parent="#accordionSidenavAppsMenu">
+                                        <!-- <nav class="sidenav-menu-nested nav">
+                                            <a class="nav-link" href="blog-management-posts-list.html">Posts List</a>
+                                            <a class="nav-link" href="blog-management-create-post.html">Create Post</a>
+                                            <a class="nav-link" href="blog-management-edit-post.html">Edit Post</a>
+                                            <a class="nav-link" href="blog-management-posts-admin.html">Posts Admin</a>
+                                        </nav> -->
+                                    </div>
+                                </nav>
+                            </div>
+                            <!-- Sidenav Accordion (Flows)-->
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseFlows" aria-expanded="false" aria-controls="collapseFlows">
+                                <div class="nav-link-icon"></i></div>
+                                주차
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseFlows" data-bs-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav">
+                                    <a class="nav-link" href="parking-1.html">주차장 상태 확인</a>
+                                    <a class="nav-link" href="parking-2.html">입출차 현황 조회</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="nav-link-icon"></i></div>
+                                시설
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts" data-bs-parent="#accordionSidenav">
+                                <nav class="sidenav-menu-nested nav">
+                                    <a class="nav-link" href="reserve-health.html">헬스장</a>
+                                    <a class="nav-link" href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/reserve-swim.html">수영장</a>
+                                    <a class="nav-link" href="reserve-study.html">독서실</a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+                        <div class="container-xl px-4">
+                            <div class="page-header-content pt-4">
+                                <div class="row align-items-center justify-content-between">
+                                    <div class="col-auto mt-4">
+                                        <h1 class="page-header-title">
+                                            <div class="page-header-icon"><i data-feather="map"></i></div>
+                                            주차장 상태 확인
+                                        </h1>
+                                        <div class="page-header-subtitle">현재 주차장 현황을 파악할 수 있습니다</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                    <!-- Main page content-->
+                    <div class="container-xl px-4 mt-n10">
+                        <div class="card mb-4">
+                            <div class="container-xl px-4 mt-4">
+                                <!-- Account page navigation-->
+                                <nav class="nav nav-borders">
+                                    <a class="nav-link" href="parking-1.html">1층</a>
+                                    <a class="nav-link" href="parking-1-BF2.html">2층</a>
+                                    <a class="nav-link" href="parking-1-BF3.html">3층</a>
+                                </nav>
+                                <hr class="mt-0 mb-4" />
+                                <!-- 여기서부터 코드 시작 -->
+                                <div class="row"> 
+                                    <head>
+                                        <meta charset="UTF-8">
+                                        <title>영화관 좌석 배치</title>
+                                        <link href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/css/styleparking.css" rel="stylesheet" />
+                                        <style>
+                                            *{
+                                                box-sizing: border-box;
+                                            }
+                                            .float-box > div{
+                                                float:left;
+                                                width:30%;
+                                            }
+                                            .float-box::after{
+                                                content:"";
+                                                display: block;
+                                                clear:both;
+                                            }
+                                            .float-box > .result {
+                                                padding:0.5rem;
+                                            }
+                                        </style>
+                                            <script src="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/js/parking.js"></script>
+                                        <script>
+                                            window.addEventListener("load", function(){
+                                                var parking = new Hacademy.Reservation("#parking");
+                                                parking.addChangeListener(function(seat){
+                                                    print(this);
+                                                });
+                                                print(parking);
+                                                function print(app){
+                                                    document.querySelector(".result").textContent = app.getQueryString();
+                                                }
+                                            });
+                                        </script>
+                                    </head>
+
+                                    <body>
+                                        <!-- <h1 align="center">Demo 4 : Client manual single mode</h1>
+                                        <ul>
+                                            <li>사용자가 좌석을 하나만 선택하는 경우</li>
+                                            <li>.cinema-seat-area에 data-mode="client"로 설정하거나 미작성 시 사용자 모드 설정</li>
+                                            <li>.cinema-seat-area에 data-fill="manual"로 설정하여 수동 모드 설정</li>
+                                            <li>좌석번호를 표시하고 싶은 경우 .cinema-seat-area에 data-seatno="visible"로 설정</li>
+                                            <li>좌석에 상태에 맞게 data-state, data-direction 등을 설정해야 함(데이터베이스에 저장된 값을 불러와야함)</li>
+                                            <li>좌석번호는 현재 임의의 수정이 불가</li>
+                                            <li>좌석 열 수를 벗어나는 좌석은 삭제됨</li>
+                                            <li>좌석 칸 수를 벗어나는 좌석은 삭제됨</li>
+                                            <li>한 좌석씩만 선택되게 하고 싶으면 .cinema-seat-area에 data-choice="single"로 설정(기본값 multiple)</li>
+                                        </ul> -->
+                                        <div class="float-box">
+                                            <div style="width: 95%;">
+                                                <form action="reserve-parking-complete.html" method="get">
+                                                    <div id="parking" class="parking-wrap" data-name="seat" style="top:0%; left:0%; width:100%; height: 100%;">
+                                                        <div id="parking-zone" class="parking-seat-area" data-rowsize="10" data-colsize="20" data-mode="client" data-fill="manual" data-seatno="visible" data-choice="single">
+                                                            <!-- <div class="parking-seat" data-row="1" data-col="1" data-direction="up"></div>
+                                                            <div class="parking-seat" data-row="1" data-col="2" data-state="space"></div> -->
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                </form> 
+                                            </div>
+                                        </div>
+                                    </body>
+                                </div> 
+                                <!-- 여기까지 코드 다 들어가야 함 -->
+                            </div>
+                        </div>
+                    </div>
+                        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/js/datatables/datatables-simple-demo.js"></script>
+        <script>
+            const pzone = document.getElementById("parking-zone")
+            for(let x = 1; x < 21; x++){
+                for(let y = 1; y < 11; y++){
+                    let parking = document.createElement("div") // div 생성
+                    parking.className = "parking-seat"
+                    parking.setAttribute("data-row", y.toString())
+                    parking.setAttribute("data-col", x.toString())
+
+                    if(y == 2 && (x > 1 && x < 20)){
+                        parking.setAttribute("data-state", "space")  // 빈 공간
+                    }
+                    else if(y == 9 && (x > 1 && x < 20)){
+                        parking.setAttribute("data-state", "space")  // 빈 공간
+                    }
+                    else if(y == 5 && (x > 1 && x < 21)){
+                        parking.setAttribute("data-state", "space")  // 빈 공간
+                    }
+                    else if(y == 6 && (x > 1 && x < 21)){
+                        parking.setAttribute("data-state", "space")  // 빈 공간
+                    }
+                    else if(x == 2 && (y > 1 && y < 10)){
+                        parking.setAttribute("data-state", "space")  // 빈 공간
+                    }
+                    else if(x == 19 && (y > 1 && y < 10)){
+                        parking.setAttribute("data-state", "space")  // 빈 공간
+                    }
+                    else if(y == 1 && (x ==1)){
+                        parking.setAttribute("data-state", "space")  // 모서리 기둥
+                    }
+                    else if(y == 1 && (x==20)){
+                        parking.setAttribute("data-state", "space")  // 모서리 기둥
+                    }
+                    else if(y == 10 && (x == 1)){
+                        parking.setAttribute("data-state", "space")  // 모서리 기둥
+                    }
+                    else if(y == 10 && (x==20)){
+                        parking.setAttribute("data-state", "space")  // 모서리 기둥
+                    }
+                    else{
+                        parking.setAttribute("data-direction", "up")
+                    }
+
+                    
+                    pzone.appendChild(parking)
+                }
+            }
+        </script>
+    </body>
+</html>

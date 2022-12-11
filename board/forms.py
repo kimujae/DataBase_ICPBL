@@ -12,6 +12,14 @@ class BoardForm(forms.ModelForm):
             "category": "카테고리",
         }
 
+class PhotoForm(forms.Form):
+    class Meta:
+
+        fields = ["Photo"]
+        labels = {
+            "Photo": "사진",
+        }
+
 
 class ReplyForm(forms.ModelForm):
     class Meta:

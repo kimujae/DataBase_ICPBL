@@ -61,8 +61,8 @@ class User(models.Model):
 
 
 class UserProfile(models.Model):
-    nickname = models.CharField(max_length=128, unique= True, verbose_name= '닉네임', default='')
+    nickname = models.CharField(max_length=128, unique= True, verbose_name= '닉네임', null=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    email = models.EmailField(max_length=128, unique=True, verbose_name='이메일', default='')
-    phone_num = models.CharField(max_length=128,  verbose_name='전화번호', default='')
+    email = models.EmailField(max_length=128, unique=True, verbose_name='이메일', null=False)
+    phone_num = models.CharField(max_length=128,  verbose_name='전화번호', default='', null=False)
     car_num = models.CharField(max_length=128, default='')

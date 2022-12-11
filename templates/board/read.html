@@ -16,10 +16,16 @@
                 <div class="card-body">
                     <p>등록일 : {{ board.updated_date }}</p>
                     <p>작성자 : {{ board.author.username }}</p>
+                    <p>사진 :</p>
+                    <p>{%if photo%}
+                        <img src="{{photo.image.url}}" width="300"><br>
+                    {%endif%}
+                    </p>
+                    <p>내용 :</p>
                     <p>{{ board.content }}</p>
                 </div>
                 <div class="card-footer">
-                    <a href="{% url 'board:board_list' %}" class="btn btn-secondary">목록</a>
+                    <a  class="btn btn-secondary">목록</a>
                     <div class="float-end">
                         <a href="{% url 'board:board_update' board.id %}" class="btn btn-warning">수정</a>
                         <button type="button" class="btn btn-danger delete-button" data-url="{% url 'board:board_delete' board.id %}">삭제</button>
@@ -29,7 +35,29 @@
         </div>
     </div>
     <!--// 게시글 보기 -->
-
+<!-- 댓글 목록 -->
+    {% if reply_list %}
+        {% for reply in reply_list %}
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <p>등록일 : {{ reply.updated_date }}</p>
+                            <p>작성자 : {{ reply.author.user_last_name }}</p>
+                            <p>{{ reply.content }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="float-end">
+                                <a href="{% url 'board:reply_update' board.id reply.id %}" class="btn btn-warning">수정</a>
+                                <button type="button" class="btn btn-danger delete-button" data-url="{% url 'board:reply_delete' board.id reply.id %}">삭제</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <!--// 댓글 목록 -->
     {% if reply %}
         <!-- 댓글 수정 -->
         <div class="row mt-3">
@@ -87,29 +115,7 @@
         <!--// 댓글 등록 -->
     {% endif %}
 
-    <!-- 댓글 목록 -->
-    {% if reply_list %}
-        {% for reply in reply_list %}
-            <div class="row mt-3">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <p>등록일 : {{ reply.updated_date }}</p>
-                            <p>작성자 : {{ reply.author.username }}</p>
-                            <p>{{ reply.content }}</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="float-end">
-                                <a href="{% url 'board:reply_update' board.id reply.id %}" class="btn btn-warning">수정</a>
-                                <button type="button" class="btn btn-danger delete-button" data-url="{% url 'board:reply_delete' board.id reply.id %}">삭제</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    {% endif %}
-    <!--// 댓글 목록 -->
+
 </div>
 
 <!-- 삭제 모달 -->

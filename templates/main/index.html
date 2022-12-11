@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{%load static%}
 {% block content %}
                 <main>
                     <header class="py-10 mb-4 bg-gradient-primary-to-secondary">
@@ -17,15 +17,15 @@
                         <hr class="mt-0 mb-4" />
                         <div class="row">
                             <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
-                                <a class="d-block lift rounded overflow-hidden mb-2" href="board-danji.html"><img class="img-fluid" src="./assets/img/download/notice.jpg" alt="..." /></a>
+                                <a class="d-block lift rounded overflow-hidden mb-2" href="{% url 'board:board_list_complaint' category_name='공지' %}"><img class="img-fluid" src="{% static 'img/download/notice.jpg' %}" alt="..." /></a>
                                 <div class="text-center small">공지 게시판</div>
                             </div>
                             <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
-                                <a class="d-block lift rounded overflow-hidden mb-2" href="maintenance-fee-1.html"><img class="img-fluid" src="./assets/img/download/maintenance.jpg" alt="..." /></a>
+                                <a class="d-block lift rounded overflow-hidden mb-2" href="{% url 'maintenence:index'%}"><img class="img-fluid" src="{% static 'img/download/maintenance.jpg' %}" alt="..." /></a>
                                 <div class="text-center small">관리비 고지서</div>
                             </div>
                             <div class="col-md-6 col-xl-4">
-                                <a class="d-block lift rounded overflow-hidden mb-2" href="reserve-health.html"><img class="img-fluid" src="./assets/img/download/gym.jpeg" alt="..." /></a>
+                                <a class="d-block lift rounded overflow-hidden mb-2" href="{% url 'reservation:hreservation'%}"><img class="img-fluid" src="{% static 'img/download/gym.jpeg' %}" alt="..." /></a>
                                 <div class="text-center small">헬스장</div>
                             </div>
                         </div>

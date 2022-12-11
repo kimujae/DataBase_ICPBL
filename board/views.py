@@ -1,21 +1,20 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from django.contrib import messages
-from .models import Board, Reply, Category
-from .forms import BoardForm, ReplyForm
+from .models import Board, Reply, Category, Photo
+from .forms import BoardForm, ReplyForm, PhotoForm
 from aptcomplex.models import Houseinfo
 from common.models import User
+from common.decorators import login_required
 
 
-def main(request):
-    return render(request, "board/board-dong.html")
 
 # 게시글 목록
-
+@login_required
 def board_list_dong(request, category_name):
+    context = {}
+
     login_session = request.session.get('login_session', '')
-    context = {'login_session': login_session}
     user = User.objects.get(user_id=login_session)
     building_num = user.user_house_holder.building_num
     house_info = Houseinfo.objects.filter(building_num = building_num)
@@ -29,14 +28,22 @@ def board_list_dong(request, category_name):
     page = request.GET.get("page", 1)
     paginator = Paginator(board_list, 10)
     object_list = paginator.get_page(page)
-    context = {"board_list": object_list, 'category': category}
+    context = {"board_list": object_list, 'category': category , 'user':user}
+
+    if login_session =='':
+        context['login_session']= False
+    else :
+        context['login_session']=True
+
+    context['complaint'] = False
 
     return render(request, "board/board-dong.html", context)
 
-
+@login_required
 def board_list_complaint(request, category_name):
     login_session = request.session.get('login_session', '')
     context = {'login_session': login_session}
+
     user = User.objects.get(user_id=login_session)
 
     category = Category.objects.get(slug=category_name)
@@ -45,14 +52,65 @@ def board_list_complaint(request, category_name):
     page = request.GET.get("page", 1)
     paginator = Paginator(board_list, 10)
     object_list = paginator.get_page(page)
-    context = {"board_list": object_list, 'category': category}
+    context = {"board_list": object_list, 'category': category, 'user':user}
+    if login_session =='':
+        context['login_session']= False
+    else :
+        context['login_session']=True
 
+    context['complaint'] = True
     return render(request, "board/board-dong.html", context)
+@login_required
+def board_list_joonggo(request, category_name):
+    login_session = request.session.get('login_session', '')
+    context = {'login_session': login_session}
+
+    user = User.objects.get(user_id=login_session)
+
+    category = Category.objects.get(slug=category_name)
+    board_list = Board.objects.filter(category=category).order_by("-created_date")
+    photo_list =Photo()
+    for board in board_list :
+        photo_list = Photo.objects.filter(post = board).order_by("-post_id")
+
+    page = request.GET.get("page", 1)
+    paginator = Paginator(board_list, 10)
+    object_list = paginator.get_page(page)
+    context = {"board_list": object_list,"photo_list":photo_list ,'category': category, 'user':user}
+    if login_session == '':
+        context['login_session'] = False
+    else:
+        context['login_session'] = True
+
+    return render(request, "board/joonggo.html", context)
 
 
+@login_required
+def board_list_bunsil(request, category_name):
+    login_session = request.session.get('login_session', '')
+    context = {'login_session': login_session}
+
+    user = User.objects.get(user_id=login_session)
+
+    category = Category.objects.get(slug=category_name)
+    board_list = Board.objects.filter(category=category).order_by("-created_date")
+    photo_list =Photo()
+    for board in board_list :
+        photo_list = Photo.objects.filter(post = board).order_by("-post_id")
+
+    page = request.GET.get("page", 1)
+    paginator = Paginator(board_list, 10)
+    object_list = paginator.get_page(page)
+    context = {"board_list": object_list,"photo_list":photo_list ,'category': category, 'user':user}
+    if login_session =='':
+        context['login_session']= False
+    else :
+        context['login_session']=True
+    context['bunsil'] = True
+    return render(request, "board/joonggo.html", context)
 
 
-
+@login_required
 def category_page(request, slug):
     if slug == 'no_category':
         category = '미분류',
@@ -73,41 +131,198 @@ def category_page(request, slug):
     )
 
 # 게시글 등록
-
+@login_required
 def board_create(request):
     login_session = request.session.get('login_session', '')
+
+
     user = User.objects.get(user_id = login_session)
 
     category_list = Category.objects.all()
     if request.method == "POST":
-        form = BoardForm(request.POST)
-        if form.is_valid():
-            board = form.save(commit=False)
-            board.author = user
-            selected_category = get_object_or_404(Category, pk = request.POST.get('selected_category'))
-            board.category = selected_category
-            board.save()
-            return redirect("board:board_list" , category_name = board.category.name)
+        #form = BoardForm(request.POST)
+        #photoform = PhotoForm(request.POST)
+
+        board = Board()
+        board.subject =request.POST['subject']
+        board.content = request.POST['content']
+        #board = form.save(commit=False)
+        board.author = user
+        category = Category.objects.get(name  ='공지')
+        board.category = category
+        board.save()
+
+        #for img in request.FILES['Photo']:
+            # Photo 객체를 하나 생성한다.
+        photo = Photo()
+        # 외래키로 현재 생성한 Post의 기본키를 참조한다.
+        photo.post = board
+        # imgs로부터 가져온 이미지 파일 하나를 저장한다.
+        photo.image = request.FILES.get('img')
+        # 데이터베이스에 저장
+        photo.save()
+        return redirect("board:board_list_dong" ,category_name= category)
     else:
         form = BoardForm()
-    context = {"form": form, "category_list" : category_list}
-    return render(request, "board/create.html", context)
+
+    context = {"form": form, "category_list" : category_list, 'user':user}
+    if login_session =='':
+        context['login_session']= False
+    else :
+        context['login_session']=True
+    return render(request, "board/board-dong-create.html", context)
+
+@login_required
+def board_create_minwon(request):
+    login_session = request.session.get('login_session', '')
 
 
+    user = User.objects.get(user_id = login_session)
+
+    category_list = Category.objects.all()
+    if request.method == "POST":
+        #form = BoardForm(request.POST)
+        #photoform = PhotoForm(request.POST)
+
+        board = Board()
+        board.subject =request.POST['subject']
+        board.content = request.POST['content']
+        #board = form.save(commit=False)
+        board.author = user
+        category = Category.objects.get(name  ='민원')
+        board.category = category
+        board.save()
+
+        #for img in request.FILES['Photo']:
+            # Photo 객체를 하나 생성한다.
+        photo = Photo()
+        # 외래키로 현재 생성한 Post의 기본키를 참조한다.
+        photo.post = board
+        # imgs로부터 가져온 이미지 파일 하나를 저장한다.
+        photo.image = request.FILES.get('img')
+        # 데이터베이스에 저장
+        photo.save()
+        return redirect("board:board_list_dong" ,category_name= category)
+    else:
+        form = BoardForm()
+    context = {"form": form, "category_list" : category_list, 'user':user}
+    if login_session =='':
+        context['login_session']= False
+    else :
+        context['login_session']=True
+    return render(request, "board/board-dong-create.html", context)
+
+@login_required
+def board_create_joonggo(request):
+    login_session = request.session.get('login_session', '')
+
+    user = User.objects.get(user_id = login_session)
+
+    category_list = Category.objects.all()
+    if request.method == "POST":
+        #form = BoardForm(request.POST)
+        #photoform = PhotoForm(request.POST)
+
+        board = Board()
+        board.subject =request.POST['subject']
+        board.content = request.POST['content']
+        #board = form.save(commit=False)
+        board.author = user
+        category = Category.objects.get(name  ='중고')
+        board.category = category
+        board.save()
+
+        #for img in request.FILES['Photo']:
+            # Photo 객체를 하나 생성한다.
+        photo = Photo()
+        # 외래키로 현재 생성한 Post의 기본키를 참조한다.
+        photo.post = board
+        # imgs로부터 가져온 이미지 파일 하나를 저장한다.
+        photo.image = request.FILES.get('img')
+        # 데이터베이스에 저장
+        photo.save()
+        return redirect("board:board_list_joonggo" ,category_name= category)
+    else:
+        form = BoardForm()
+    context = {"form": form, "category_list" : category_list, 'user':user}
+
+    if login_session == '':
+        context['login_session'] = False
+    else:
+        context['login_session'] = True
+    return render(request, "board/board-dong-create.html", context)
+
+@login_required
+def board_create_bunsil(request):
+    login_session = request.session.get('login_session', '')
+
+
+    user = User.objects.get(user_id = login_session)
+
+    category_list = Category.objects.all()
+    if request.method == "POST":
+        #form = BoardForm(request.POST)
+        #photoform = PhotoForm(request.POST)
+
+        board = Board()
+        board.subject =request.POST['subject']
+        board.content = request.POST['content']
+        #board = form.save(commit=False)
+        board.author = user
+        category = Category.objects.get(name  ='분실물')
+        board.category = category
+        board.save()
+
+        #for img in request.FILES['Photo']:
+            # Photo 객체를 하나 생성한다.
+        photo = Photo()
+        # 외래키로 현재 생성한 Post의 기본키를 참조한다.
+        photo.post = board
+        # imgs로부터 가져온 이미지 파일 하나를 저장한다.
+        photo.image = request.FILES.get('img')
+        # 데이터베이스에 저장
+        photo.save()
+        return redirect("board:board_list_bunsil" ,category_name= category)
+    else:
+        form = BoardForm()
+    context = {"form": form, "category_list" : category_list, 'user':user}
+    if login_session == '':
+        context['login_session'] = False
+    else:
+        context['login_session'] = True
+    return render(request, "board/board-dong-create.html", context)
 # 게시글 보기
 
+@login_required
 def board_read(request, board_id):
+    login_session = request.session.get('login_session', '')
+
+
+    user = User.objects.get(user_id=login_session)
+
     board = get_object_or_404(Board, pk=board_id)
+    if Photo.objects.filter(post = board) :
+        photo = Photo.objects.get(post=board)
+
     reply_list = Reply.objects.filter(board=board.id).order_by("-created_date")
-    context = {"board": board, "reply_list": reply_list}
-    return render(request, "board/read.html", context)
+    context = {"board": board, "photo":photo, "reply_list": reply_list, 'user':user}
+    if login_session =='':
+        context['login_session']= False
+    else :
+        context['login_session']=True
+    return render(request, "board/test-post-board-dong.html", context)
 
 
 # 게시글 수정
-
+@login_required
 def board_update(request, board_id):
+    login_session = request.session.get('login_session', '')
+
+
+    user = User.objects.get(user_id=login_session)
+
     board = get_object_or_404(Board, pk=board_id)
-    if board.author != request.user:
+    if board.author != user:
         messages.error(request, "수정 권한이 없습니다.")
         return redirect("board:board_read", board_id=board.id)
     if request.method == "POST":
@@ -119,15 +334,25 @@ def board_update(request, board_id):
             return redirect("board:board_read", board_id=board.id)
     else:
         form = BoardForm(instance=board)
-    context = {"form": form, "board": board}
+    context = {"form": form, "board": board, 'user':user}
+    if login_session =='':
+        context['login_session']= False
+    else :
+        context['login_session']=True
     return render(request, "board/update.html", context)
 
 
 # 게시글 삭제
 
+@login_required
 def board_delete(request, board_id):
+    login_session = request.session.get('login_session', '')
+
+
+    user = User.objects.get(user_id=login_session)
+
     board = get_object_or_404(Board, pk=board_id)
-    if board.author != request.user:
+    if board.author != user:
         messages.error(request, "삭제 권한이 없습니다.")
         return redirect("board:board_read", board_id=board.id)
     board.delete()
@@ -136,30 +361,45 @@ def board_delete(request, board_id):
 
 
 # 댓글 등록
-@login_required(login_url="common:login")
+
+@login_required
 def reply_create(request, board_id):
+    login_session = request.session.get('login_session', '')
+    context = {'login_session': login_session}
+
+    user = User.objects.get(user_id=login_session)
+
     board = get_object_or_404(Board, pk=board_id)
     reply_list = Reply.objects.filter(board=board.id).order_by("-created_date")
     if request.method == "POST":
         form = ReplyForm(request.POST)
         if form.is_valid():
             reply = form.save(commit=False)
-            reply.author = request.user
+            reply.author = user
             reply.board = board
             reply.save()
             return redirect("board:board_read", board_id=board.id)
     else:
         form = ReplyForm()
-    context = {"form": form, "board": board, "reply_list": reply_list}
+    context = {"form": form, "board": board, "reply_list": reply_list, 'user':user}
+    if login_session == '':
+        context['login_session'] = False
+    else:
+        context['login_session'] = True
     return render(request, "board/read.html", context)
 
 
 # 댓글 수정
-@login_required(login_url="common:login")
+@login_required
 def reply_update(request, board_id, reply_id):
+    login_session = request.session.get('login_session', '')
+
+
+    user = User.objects.get(user_id=login_session)
+
     board = get_object_or_404(Board, pk=board_id)
     reply = get_object_or_404(Reply, pk=reply_id)
-    if reply.author != request.user:
+    if reply.author != user:
         messages.error(request, "수정 권한이 없습니다.")
         return redirect("board:board_read", board_id=board.id)
     if request.method == "POST":
@@ -170,13 +410,25 @@ def reply_update(request, board_id, reply_id):
             return redirect("board:board_read", board_id=board.id)
     else:
         form = ReplyForm()
-    context = {"form": form, "board": board, "reply": reply}
+    context = {"form": form, "board": board, "reply": reply, 'user':user}
+    if login_session =='':
+        context['login_session']= False
+    else :
+        context['login_session']=True
     return render(request, "board/read.html", context)
 
 
 # 게시글 삭제
-
+@login_required
 def reply_delete(request, board_id, reply_id):
+    login_session = request.session.get('login_session', '')
+    context = {'login_session': login_session}
+    if login_session =='':
+        context['login_session']= False
+    else :
+        context['login_session']=True
+    user = User.objects.get(user_id=login_session)
+
     board = get_object_or_404(Board, pk=board_id)
     reply = get_object_or_404(Reply, pk=reply_id)
     if reply.author != request.user:

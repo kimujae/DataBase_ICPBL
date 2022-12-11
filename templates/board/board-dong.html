@@ -14,14 +14,35 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="list"></i></div>
+                            {%if complaint%}
+                            단지 게시판
+                            {%else%}
                             동 게시판
+                            {%endif%}
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-primary" href="blog-management-create-post.html">
+                        {%if category.name == '민원' %}
+                        <a class="btn btn-sm btn-light text-primary" href="{%url 'board:board_create_minwon'%}">
                             <i class="me-1" data-feather="plus"></i>
                             글 작성하기
                         </a>
+                        {%elif category.name == '공지'%}
+                        <a class="btn btn-sm btn-light text-primary" href="{%url 'board:board_create_notice'%}">
+                            <i class="me-1" data-feather="plus"></i>
+                            글 작성하기
+                        </a>
+                        {%elif category.name == '중고'%}
+                        <a class="btn btn-sm btn-light text-primary" href="{%url 'board:board_create_joonggo'%}">
+                            <i class="me-1" data-feather="plus"></i>
+                            글 작성하기
+                        </a>
+                        {%elif category.name == '분실물'%}
+                        <a class="btn btn-sm btn-light text-primary" href="{%url 'board:board_create_bunsil'%}">
+                            <i class="me-1" data-feather="plus"></i>
+                            글 작성하기
+                        </a>
+                        {%endif%}
                     </div>
                 </div>
             </div>
@@ -34,16 +55,16 @@
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
+                        <th >제목</th>
+                        <th >작성자</th>
+                        <th >작성일</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
+                        <th >제목</th>
+                        <th >작성자</th>
+                        <th >작성일</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -51,9 +72,9 @@
                     {% for board in board_list %}
                         <tr>
                             <!-- 글번호 = (전제글수) - (시작인덱스) - (현재인덱스) + 1 -->
-                            <td><a href="{% url 'board:board_read' board.id %}">{{ board.subject }}</a></td>
-                            <td>{{ board.author.username }}</td>
-                            <td>{{ board.updated_date }}</td>
+                            <td ><a href="{% url 'board:board_read' board.id %}"><strong>{{ board.subject }}</strong></a></td>
+                            <td >{{ board.author.user_first_name }}{{ board.author.user_last_name }}</td>
+                            <td >{{ board.updated_date}}</td>
                         </tr>
                     {% endfor %}
                 {% else %}

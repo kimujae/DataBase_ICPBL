@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>아파트 관리 시스템</title>
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        <link rel="icon" type="image/x-icon" href="../../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/assets/img/favicon.png" />
+        <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    </head>
+
+
+    {%block content%}
+                    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+                        <div class="container-fluid px-4">
+                            <div class="page-header-content">
+                                <div class="row align-items-center justify-content-between pt-3">
+                                    <div class="col-auto mb-3">
+                                        <h1 class="page-header-title">
+                                            <div class="page-header-icon"><i data-feather="list"></i></div>
+                                            {%if bunsil%}
+                                            분실물 게시판
+                                            {%else%}
+                                            중고거래 게시판
+                                            {%endif%}
+                                        </h1>
+                                    </div>
+                                    <div class="col-12 col-xl-auto mb-3">
+                                        {%if bunsil%}
+                                        <a class="btn btn-sm btn-light text-primary" href="{%url 'board:board_create_bunsil'%}">
+                                        {%else%}
+                                        <a class="btn btn-sm btn-light text-primary" href="{%url 'board:board_create_joonggo'%}">
+                                        {%endif%}
+                                            <i class="me-1" data-feather="plus"></i>
+                                            글 작성하기
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                    <!-- Main page content-->
+                    <div class="container-fluid px-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="container-xl">
+                                    <div class="row">
+
+                                        {% if board_list %}
+                                        {% for board in board_list %}
+                                            <div class="col-md-6 col-xl-4 mb-4">
+                                                {% for photo in board.photo_set.all %}
+                                            <a class="d-block lift rounded overflow-hidden mb-2" href="test-post-joonggo.html"><img class="img-fluid" src="{{photo.image.url}}"  /></a>
+                                            <div class="text-center small">{{board.subject}}</div>
+                                            </div>
+                                            {%endfor%}
+                                            {%endfor%}
+                                        {%else%}
+                                        <a colspan="4">등록된 글이 없습니다.</a>
+                                        {%endif%}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <footer class="footer-admin mt-auto footer-light">
+                    
+                </footer>
+            </div>
+        </div>
+    {%endblock%}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="../../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="../../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/js/datatables/datatables-simple-demo.js"></script>
+    </body>
+</html>

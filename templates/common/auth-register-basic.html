@@ -33,14 +33,14 @@
                                                     <!-- Form Group (ID)-->
                                                     <div class="mb-1">
                                                         <label class="small mb-1" for="user_id">ID</label>
-                                                        <input class="form-control" name="user_id" id="user_id" type="text"  placeholder="Enter ID" value="{{form.user_id.value}}"/>
+                                                        <input class="form-control" name="user_id" id="user_id" type="text"  placeholder="Enter ID" value="{{form.user_id.value|default_if_none:''}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <!-- Form Group (세대주)-->
                                                     <div class="mb-1">
                                                         <label class="small mb-1" for="user_house_holder">세대주 입력</label>
-                                                        <input class="form-control" id="user_house_holder" name = "user_house_holder" type="text" placeholder="Enter HouseHolder" value = "{{selectform.user_house_holder.value}}" />
+                                                        <input class="form-control" id="user_house_holder" name = "user_house_holder" type="text" placeholder="Enter HouseHolder" value = "{{selectform.user_house_holder.value|default_if_none:''}}" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -50,14 +50,14 @@
                                                     <!-- Form Group (password)-->
                                                     <div class="mb-1">
                                                         <label class="small mb-1" for="user_pwd">비밀번호</label>
-                                                        <input class="form-control" name = "user_pwd" id="user_pwd" type="password" placeholder="Enter password" value="{{ form.user_pw.value}}" />
+                                                        <input class="form-control" name = "user_pwd" id="user_pwd" type="password" placeholder="Enter password" value="{{ form.user_pw.value|default_if_none:''}}" >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <!-- Form Group (confirm password)-->
                                                     <div class="mb-1">
                                                         <label class="small mb-1" for="inputConfirmPassword">비밀번호 확인</label>
-                                                        <input class="form-control" id="inputConfirmPassword" type="password" placeholder="Confirm password" />
+                                                        <input class="form-control" id="inputConfirmPassword" type="password" placeholder="Confirm password" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -67,14 +67,14 @@
                                                     <!-- Form Group (first name)-->
                                                     <div class="mb-1">
                                                         <label class="small mb-1" for="user_first_name">성</label>
-                                                        <input class="form-control" name = "user_first_name" id="user_first_name" type="text" placeholder="Enter first name" value="{{ form.user_first_name.value }}" />
+                                                        <input class="form-control" name = "user_first_name" id="user_first_name" type="text" placeholder="Enter first name" value="{{ form.user_first_name.value|default_if_none:'' }}" >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <!-- Form Group (last name)-->
                                                     <div class="mb-1">
                                                         <label class="small mb-1" for="user_last_name">이름</label>
-                                                        <input class="form-control" name = "user_last_name" id="user_last_name" type="text" placeholder="Enter last name"value="{{ form.user_last_name.value}}" />
+                                                        <input class="form-control" name = "user_last_name" id="user_last_name" type="text" placeholder="Enter last name"value="{{ form.user_last_name.value|default_if_none:''}}" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -85,8 +85,8 @@
 
                                                     <div class="mb-1">
                                                         <label class="small mb-1" for = "building_num" >동</label>
-                                                        <select class ="form-select" for = "building_num" value = {{selectform.user_building_num}} >
-                                                                    <option id = "building_num" name = "building_num" value ={{selectform.user_building_num.value}}> </option>
+                                                        <select class ="form-select" for = "building_num" value = {{selectform.user_building_num}}
+                                                            <option id = "building_num" name = "building_num" value ={{selectform.user_building_num.value}} ></option>
                                                                 </select>
                                                     </div>
                                                 </div>
@@ -94,7 +94,7 @@
                                                     <!-- Form Group (room)-->
                                                     <div class="mb-1">
                                                         <label class="small mb-1">호</label>
-                                                                <select class ="form-select" for = "house_num" value = {{selectform.user_house_num}} >
+                                                                <select class ="form-select" for = "house_num" value = {{selectform.user_house_num}}
                                                                     <option id = "house_num" name = "house_num" value ={{selectform.user_house_num.value}}> </option>
                                                                 </select>
                                                     </div>

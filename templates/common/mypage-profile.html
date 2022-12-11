@@ -10,7 +10,7 @@
         <meta name="author" content="" />
         <title>아파트 관리 시스템</title>
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-        <link rel="icon" type="image/x-icon" href="../../../../OneDrive/바탕%20화면/DB-12-05/DB-12-05/Frontend/dist/assets/img/favicon.png" />
+        <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.png' %}" />
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
 
@@ -34,9 +34,9 @@
     <div class="container-xl px-4 mt-4">
         <!-- Account page navigation-->
         <nav class="nav nav-borders">
-            <a class="nav-link" href="mypage-profile.html">개인정보 변경</a>
-            <a class="nav-link" href="../../../../OneDrive/바탕%20화면/DB-12-05/DB-12-05/Frontend/dist/mypage-notice.html">알림</a>
-            <a class="nav-link" href="../../../../OneDrive/바탕%20화면/DB-12-05/DB-12-05/Frontend/dist/mypage-drop.html">계정 탈퇴</a>
+                            <a class="nav-link" href="{% url 'common:profile_view' %}">개인정보 변경</a>
+                            <a class="nav-link" href="{% url 'common:notice' %}">예약내역</a>
+                            <a class="nav-link" href="{% url 'common:drop' %}">계정 탈퇴</a>
         </nav>
         <hr class="mt-0 mb-4" />
         <div class="row">
@@ -46,7 +46,7 @@
                     <div class="card-header">프로필 사진</div>
                     <div class="card-body text-center">
                         <!-- Profile picture image-->
-                        <img class="img-account-profile rounded-circle mb-2" src="../../../../OneDrive/바탕%20화면/DB-12-05/DB-12-05/Frontend/dist/assets/img/illustrations/profiles/profile-1.png" alt="" />
+                        <img class="img-account-profile rounded-circle mb-2" src="{% static 'img/illustrations/profiles/profile-1.png' %}" alt="" />
                         <!-- Profile picture help block-->
                         <div class="small font-italic text-muted mb-4">JPG 또는 PNG (5MB 제한)</div>
                         <!-- Profile picture upload button-->
@@ -65,7 +65,7 @@
                             <div class="mb-3">
 
                                 <label class="small mb-1" for="nickname">닉네임</label>
-                                {%if profile %}
+                                {%if profile.nickname %}
                                 <input disabled class="form-control" id="nicknamed" name = "nicknamed" type="text"  value="{{profile.nickname}}" />
                                 {%else %}
                                  <input class="form-control" id="nickname" name = "nickname" type="text" placeholder="Enter your username" value="{{form.nickname.value|default_if_none:''}}" />
@@ -94,7 +94,11 @@
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1" for="email">이메일</label>
+                                {%if profile.email %}
+                                <input disabled class="form-control" id="email" name ="email" type="email" placeholder="Enter your email address" value="{{profile.email}}" />
+                                {%else %}
                                 <input class="form-control" id="email" name ="email" type="email" placeholder="Enter your email address" value="{{form.email.value|default_if_none:''}}" />
+                                {%endif%}
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputHousehold">세대주</label>
@@ -102,12 +106,21 @@
                             </div>
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
+
                                     <label class="small mb-1" for="phone_num">전화번호</label>
+                                    {%if profile.phone_num %}
+                                    <input disabled class="form-control" id="phone_num" name ="phone_num" type="tel" placeholder="Enter your valid phone number(+821055521368)" value = "{{profile.phone_num}}"  />
+                                    {%else %}
                                     <input class="form-control" id="phone_num" name ="phone_num" type="tel" placeholder="Enter your valid phone number(+821055521368)" value = "{{form.phone_num.value|default_if_none:''}}"  />
+                                    {%endif%}
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="car_num">차량번호</label>
+                                    {%if profile.car_num %}
+                                    <input disabled class="form-control" id="car_num" name ="car_num" type="text"  placeholder="차량번호" value="{{profile.car_num}}" />
+                                    {%else %}
                                     <input class="form-control" id="car_num" name ="car_num" type="text"  placeholder="차량번호" value="{{form.car_num.value|default_if_none:''}}" />
+                                    {%endif%}
                                 </div>
                             </div>
                             <!-- Save changes button-->

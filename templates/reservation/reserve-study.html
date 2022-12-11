@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>아파트 관리 시스템</title>
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.png' %}" />
+        <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    </head>
+{%block content%}
+                <main>
+                    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+                        <div class="container-xl px-4">
+                            <div class="page-header-content">
+                                <div class="row align-items-center justify-content-between pt-3">
+                                    <div class="col-auto mb-3">
+                                        <h1 class="page-header-title">
+                                            <div class="page-header-icon"><i data-feather="user"></i></div>
+                                            독서실 좌석 예약
+                                        </h1>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                    <!-- Main page content-->
+                    <div class="container-xl px-4 mt-4">
+                        <!-- Account page navigation-->
+                        <!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>영화관 좌석 배치</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.15/cinema/hacademy-cinema.css">
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        .float-box > div{
+            float:left;
+            width:30%;
+        }
+        .float-box::after{
+            content:"";
+            display: block;
+            clear:both;
+        }
+        .float-box > .result {
+            padding:0.5rem;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.15/cinema/hacademy-cinema.js"></script>
+    <script>
+        window.addEventListener("load", function(){
+            var cinema = new Hacademy.Reservation("#cinema");
+            cinema.addChangeListener(function(seat){
+                print(this);
+            });
+            print(cinema);
+            function print(app){
+                document.querySelector(".result").textContent = app.getQueryString();
+            }
+        });
+    </script>
+</head>
+<body>
+
+    <!-- <h1 align="center">Demo 4 : Client manual single mode</h1>
+    <ul>
+        <li>사용자가 좌석을 하나만 선택하는 경우</li>
+        <li>.cinema-seat-area에 data-mode="client"로 설정하거나 미작성 시 사용자 모드 설정</li>
+        <li>.cinema-seat-area에 data-fill="manual"로 설정하여 수동 모드 설정</li>
+        <li>좌석번호를 표시하고 싶은 경우 .cinema-seat-area에 data-seatno="visible"로 설정</li>
+        <li>좌석에 상태에 맞게 data-state, data-direction 등을 설정해야 함(데이터베이스에 저장된 값을 불러와야함)</li>
+        <li>좌석번호는 현재 임의의 수정이 불가</li>
+        <li>좌석 열 수를 벗어나는 좌석은 삭제됨</li>
+        <li>좌석 칸 수를 벗어나는 좌석은 삭제됨</li>
+        <li>한 좌석씩만 선택되게 하고 싶으면 .cinema-seat-area에 data-choice="single"로 설정(기본값 multiple)</li>
+    </ul> -->
+    <div class="float-box">
+        <div>
+            <form action="" method="post" >
+                {% csrf_token %}
+                <div id="cinema" class="cinema-wrap" data-name="seat" style="top:0%; left:0%; width:100%; height: 100%;">
+                    <div class="cinema-seat-area" data-rowsize="7" data-colsize="5" data-mode="client" data-fill="manual" data-seatno="visible" data-choice="single">
+                        <div class="cinema-seat" data-row="1" data-col="1" data-direction="right"></div>
+                        <div class="cinema-seat" data-row="1" data-col="2" data-state="space"></div>
+                        <div class="cinema-seat" data-row="1" data-col="3" data-direction="right"></div>
+                        <div class="cinema-seat" data-row="1" data-col="4" data-state="space"></div>
+                        <div class="cinema-seat" data-row="1" data-col="5" data-direction="right"></div>
+
+                        <div class="cinema-seat" data-row="2" data-col="1" data-direction="right"></div>
+                        <div class="cinema-seat" data-row="2" data-col="2" data-state="space"></div>
+                        <div class="cinema-seat" data-row="2" data-col="3" data-direction="right"></div>
+                        <div class="cinema-seat" data-row="2" data-col="4" data-state="space"></div>
+                        <div class="cinema-seat" data-row="2" data-col="5" data-direction="right"></div>
+
+                        <div class="cinema-seat" data-row="3" data-col="1" data-direction="right"></div>
+                        <div class="cinema-seat" data-row="3" data-col="2" data-state="space"></div>
+                        <div class="cinema-seat" data-row="3" data-col="3" data-direction="right"></div>
+                        <div class="cinema-seat" data-row="3" data-col="4" data-state="space"></div>
+                        <div class="cinema-seat" data-row="3" data-col="5" data-direction="right"></div>
+
+                        <div class="cinema-seat" data-row="4" data-col="1" data-direction="right"></div>
+                        <div class="cinema-seat" data-row="4" data-col="2" data-state="space"></div>
+                        <div class="cinema-seat" data-row="4" data-col="3" data-direction="right"></div>
+                        <div class="cinema-seat" data-row="4" data-col="4" data-state="space"></div>
+                        <div class="cinema-seat" data-row="4" data-col="5" data-direction="right"></div>
+
+                        <div class="cinema-seat" data-row="5" data-col="1" data-direction="right"></div>
+                        <div class="cinema-seat" data-row="5" data-col="2" data-state="space"></div>
+                        <div class="cinema-seat" data-row="5" data-col="3" data-direction="right"></div>
+                        <div class="cinema-seat" data-row="5" data-col="4" data-state="space"></div>
+                        <div class="cinema-seat" data-row="5" data-col="5" data-direction="right"></div>
+
+                        <div class="cinema-seat" data-row="6" data-col="1" data-direction="right"></div>
+                        <div class="cinema-seat" data-row="6" data-col="2" data-state="space"></div>
+                        <div class="cinema-seat" data-row="6" data-col="3" data-direction="right"></div>
+                        <div class="cinema-seat" data-row="6" data-col="4" data-state="space"></div>
+                        <div class="cinema-seat" data-row="6" data-col="5" data-direction="right"></div>
+
+                        <div class="cinema-seat" data-row="7" data-col="1" data-direction="right"></div>
+                        <div class="cinema-seat" data-row="7" data-col="2" data-state="space"></div>
+                        <div class="cinema-seat" data-row="7" data-col="3" data-direction="right"></div>
+                        <div class="cinema-seat" data-row="7" data-col="4" data-state="space"></div>
+                        <div class="cinema-seat" data-row="7" data-col="5" data-direction="right"></div>
+                    </div>
+                </div>
+        
+                 <input href="{% url 'reservation:scomplete'%}" class="mt-3 btn btn-primary" type ="submit" value="선택">
+            </form> 
+        </div>
+        <div class="result">
+        </div>
+    </div>
+</body>
+</html>
+                    </div>
+                </main>
+                <footer class="footer-admin mt-auto footer-light">
+                    
+                </footer>
+            </div>
+        </div>
+{% endblock %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="{% static 'js/scripts.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="{% static 'demo/chart-area-demo.js' %}"></script>
+        <script src="{% static 'demo/chart-bar-demo.js' %}"></script>
+        <script src="{% static 'demo/chart-pie-demo.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.15/cinema/hacademy-cinema.js" crossorigin="anonymous"></script>
+    </body>
+</html>

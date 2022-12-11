@@ -10,6 +10,14 @@ from aptcomplex.models import Houseinfo
 
 
 
+
+def drop(request):
+    return render(request, 'common/mypage-drop.html')
+
+def notice(request):
+
+    return render(request, 'common/mypage-notice.html')
+
 def register(request):
     #houseinfo_form = HouseInfoForm()
     register_form = RegisterForm()
@@ -109,8 +117,17 @@ def profile_view(request):
         if profileform.is_valid():
             if UserProfile.objects.filter(user=user):
                 profile = UserProfile.objects.get(user=user)
-                profile.email = email = profileform.email
                 context['profile'] = profile
+                if not profile.nickname :
+                    profile.nickname = profileform.nickname
+                if not profile.email :
+                    profile.email = profileform.email
+                if not profile.phone_num:
+                    profile.phone_num = profileform.phone_num
+                if not profile.car_num:
+                    profile.car_num = profileform.car_num
+
+
             else:
                 profile = UserProfile(
                     nickname = profileform.nickname,

@@ -38,3 +38,7 @@ class Reply(models.Model):
     def __str__(self):
         return self.content
 
+class Photo(models.Model):
+    post = models.ForeignKey(Board, on_delete=models.CASCADE, null=True)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
+
