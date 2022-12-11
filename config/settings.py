@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'parking.apps.ParkingConfig',
     'common.apps.CommonConfig',
     'board.apps.BoardConfig',
     'aptcomplex.apps.AptcomplexConfig',
@@ -84,7 +85,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'XE',
         'USER': 'USER1',
         'PASSWORD':'1234',
-        'HOST' : 'DESKTOP-4G64VU8',
+        'HOST' : 'DESKTOP-NFD8NTG',
         'PORT' : '1521',
     }
 }

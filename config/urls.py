@@ -15,7 +15,8 @@ urlpatterns = [
     path("common/", include("common.urls")),
     path("board/", include("board.urls")),
     path("maintenence/", include('maintenence.urls')),
-    path("reservation/",include('reservation.urls'))
+    path("reservation/",include('reservation.urls')),
+    path("parking/", include('parking.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
