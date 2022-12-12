@@ -54,27 +54,50 @@
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
-                    <tr>
+                {%if category.name == '민원' %}
+                <tr>
+                        <th >제목</th>
+                        <th >작성일</th>
+                    </tr>
+                {%else%}
+                <tr>
                         <th >제목</th>
                         <th >작성자</th>
                         <th >작성일</th>
                     </tr>
+                {%endif%}
+
                 </thead>
                 <tfoot>
-                    <tr>
+                {%if category.name == '민원' %}
+                <tr>
+                        <th >제목</th>
+                        <th >작성일</th>
+                    </tr>
+                {%else%}
+                <tr>
                         <th >제목</th>
                         <th >작성자</th>
                         <th >작성일</th>
                     </tr>
+                {%endif%}
+
                 </tfoot>
                 <tbody>
                 {% if board_list %}
                     {% for board in board_list %}
                         <tr>
                             <!-- 글번호 = (전제글수) - (시작인덱스) - (현재인덱스) + 1 -->
+                            {%if category.name == '민원' %}
+                            <td ><a href="{% url 'board:board_read' board.id %}"><strong>{{ board.subject }}</strong></a></td>
+                            <td >{{ board.updated_date}}</td>
+
+                            {%else%}
                             <td ><a href="{% url 'board:board_read' board.id %}"><strong>{{ board.subject }}</strong></a></td>
                             <td >{{ board.author.user_first_name }}{{ board.author.user_last_name }}</td>
                             <td >{{ board.updated_date}}</td>
+                            {%endif%}
+
                         </tr>
                     {% endfor %}
                 {% else %}

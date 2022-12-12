@@ -18,7 +18,7 @@ def board_list_dong(request, category_name):
     user = User.objects.get(user_id=login_session)
     building_num = user.user_house_holder.building_num
     house_info = Houseinfo.objects.filter(building_num = building_num)
-    users = User.objects.get(user_house_holder__in= house_info)
+    users = User.objects.get(user_house_holder__in = house_info )
 
     category = Category.objects.get(slug =category_name)
     board_list = Board.objects.filter(author = users , category = category).order_by("-created_date")
