@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{%load static%}
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -8,8 +9,8 @@
         <meta name="author" content="" />
         <title>아파트 관리 시스템</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/css/styles.css" rel="stylesheet" />
-        <link rel="icon" type="image/x-icon" href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/assets/img/favicon.png" />
+        <link href="{%static 'css/styles.css' %}" rel="stylesheet" />
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     </head>
@@ -17,7 +18,7 @@
         <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
             <!-- Sidenav Toggle Button-->
             <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu"></i></button>
-            <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="../../../OneDrive/바탕%20화면/DB-final/DB-final/Frontend/dist/index.html">아파트 관리 시스템</a>
+            <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="index.html">아파트 관리 시스템</a>
             <!-- Navbar Search Input-->
             <form class="form-inline me-auto d-none d-lg-block me-3">
                 <div class="input-group input-group-joined input-group-solid">

@@ -14,11 +14,21 @@ def inquiry(request, ):
     context = {'inquiry_list': inquiry_list}
     return render(request, 'parking/parking-2.html', context)
 
-def parking_map(request):
-    if request.user.is_authenticated:
-        current_user = request.user
-        location = current_user.user_house_holder
-        building = Houseinfo.objects.get(location)
-    objects_list = Park.objects.filter(location = building_num)
-    context = {'parking_map': objects_list}
-    return render(request, 'parking/parking-1.html', context)
+#def parking_map(request):
+#    if request.user.is_authenticated:
+#        current_user = request.user
+#        location = current_user.user_house_holder
+#        building = Houseinfo.objects.get(location)
+#    objects_list = Park.objects.filter(location = building_num)
+#    context = {'parking_map': objects_list}
+#    return render(request, 'parking/parking-1.html', context)
+
+
+def parking1(request):
+    return render(request, 'parking/parking-1.html')
+
+def parking2(request):
+    return render(request, 'parking/parking-1-BF2.html')
+
+def parking3(request):
+    return render(request, 'parking/parking-1-BF3.html')
