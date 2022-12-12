@@ -154,13 +154,14 @@ def board_create(request):
 
         #for img in request.FILES['Photo']:
             # Photo 객체를 하나 생성한다.
-        photo = Photo()
-        # 외래키로 현재 생성한 Post의 기본키를 참조한다.
-        photo.post = board
-        # imgs로부터 가져온 이미지 파일 하나를 저장한다.
-        photo.image = request.FILES.get('img')
-        # 데이터베이스에 저장
-        photo.save()
+        if request.FILES.get('img') :
+            photo = Photo()
+            # 외래키로 현재 생성한 Post의 기본키를 참조한다.
+            photo.post = board
+            # imgs로부터 가져온 이미지 파일 하나를 저장한다.
+            photo.image = request.FILES.get('img')
+            # 데이터베이스에 저장
+            photo.save()
         return redirect("board:board_list_dong" ,category_name= category)
     else:
         form = BoardForm()
@@ -195,13 +196,14 @@ def board_create_minwon(request):
 
         #for img in request.FILES['Photo']:
             # Photo 객체를 하나 생성한다.
-        photo = Photo()
-        # 외래키로 현재 생성한 Post의 기본키를 참조한다.
-        photo.post = board
-        # imgs로부터 가져온 이미지 파일 하나를 저장한다.
-        photo.image = request.FILES.get('img')
-        # 데이터베이스에 저장
-        photo.save()
+        if request.FILES.get('img'):
+            photo = Photo()
+            # 외래키로 현재 생성한 Post의 기본키를 참조한다.
+            photo.post = board
+            # imgs로부터 가져온 이미지 파일 하나를 저장한다.
+            photo.image = request.FILES.get('img')
+            # 데이터베이스에 저장
+            photo.save()
         return redirect("board:board_list_dong" ,category_name= category)
     else:
         form = BoardForm()
@@ -234,13 +236,14 @@ def board_create_joonggo(request):
 
         #for img in request.FILES['Photo']:
             # Photo 객체를 하나 생성한다.
-        photo = Photo()
-        # 외래키로 현재 생성한 Post의 기본키를 참조한다.
-        photo.post = board
-        # imgs로부터 가져온 이미지 파일 하나를 저장한다.
-        photo.image = request.FILES.get('img')
-        # 데이터베이스에 저장
-        photo.save()
+        if request.FILES.get('img'):
+            photo = Photo()
+            # 외래키로 현재 생성한 Post의 기본키를 참조한다.
+            photo.post = board
+            # imgs로부터 가져온 이미지 파일 하나를 저장한다.
+            photo.image = request.FILES.get('img')
+            # 데이터베이스에 저장
+            photo.save()
         return redirect("board:board_list_joonggo" ,category_name= category)
     else:
         form = BoardForm()
@@ -275,13 +278,14 @@ def board_create_bunsil(request):
 
         #for img in request.FILES['Photo']:
             # Photo 객체를 하나 생성한다.
-        photo = Photo()
-        # 외래키로 현재 생성한 Post의 기본키를 참조한다.
-        photo.post = board
-        # imgs로부터 가져온 이미지 파일 하나를 저장한다.
-        photo.image = request.FILES.get('img')
-        # 데이터베이스에 저장
-        photo.save()
+        if request.FILES.get('img'):
+            photo = Photo()
+            # 외래키로 현재 생성한 Post의 기본키를 참조한다.
+            photo.post = board
+            # imgs로부터 가져온 이미지 파일 하나를 저장한다.
+            photo.image = request.FILES.get('img')
+            # 데이터베이스에 저장
+            photo.save()
         return redirect("board:board_list_bunsil" ,category_name= category)
     else:
         form = BoardForm()
@@ -299,13 +303,18 @@ def board_read(request, board_id):
 
 
     user = User.objects.get(user_id=login_session)
-
+    context ={}
     board = get_object_or_404(Board, pk=board_id)
+
     if Photo.objects.filter(post = board) :
         photo = Photo.objects.get(post=board)
+        context["photo"] = photo
 
     reply_list = Reply.objects.filter(board=board.id).order_by("-created_date")
-    context = {"board": board, "photo":photo, "reply_list": reply_list, 'user':user}
+    context["board"] =board
+    context["reply_list"] = reply_list
+    context["user"] = user
+
     if login_session =='':
         context['login_session']= False
     else :
